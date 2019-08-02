@@ -1,4 +1,7 @@
 # 开发指导
+
+[[TOC]]
+
 ## 需要用到的工具
 ### git
 git是一个版本控制工具，[下载](https://git-scm.com/downloads)安装并配置环境变量。
@@ -42,3 +45,33 @@ MySQL数据库，略。
 - [Spring boot 项目目录结构](https://blog.csdn.net/u012675150/article/details/79351990)
 - [BootStrap4中文手册](http://code.z01.com/v4/docs/)
 - [springboot遇到的坑](https://www.ntutn.top/show/90)
+
+## 项目开发规范
+### 包名规范
+**所有包名要求小写！**
+
+**代码层的结构**
+> 根目录：team.qiruan
+
+|类|包名|
+|---|---|
+|工程启动类|team.qiruan|
+|实体类|team.qiruan.domain|
+|数据服务层|team.qiruan.service|
+|数据服务的实现接口|team.qiruan.service.impl|
+|前端控制器|team.qiruan.controller|
+|工具类|team.qiruan.utils|
+|常量接口类|team.qiruan.constant|
+|配置信息类|team.qiruan.config|
+
+**资源文件的结构**
+可以使用[webjars](https://www.jianshu.com/p/66d1b35bcd9d)引入的静态资源使用webjars引入。
+
+|文件类型|位置|
+|---|---|
+|配置文件|config|
+|静态文件|static|
+|脚本|config/js|
+|图片|config/img|
+|样式表|config/css|
+|模板文件|templates|

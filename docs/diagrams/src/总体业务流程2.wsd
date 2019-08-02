@@ -1,0 +1,13 @@
+@startuml 总体业务流程2
+title 总体业务流程2
+:教学结束;
+if(工资结算遇到问题)then(T)
+    :进行协调;
+    if(协调失败)then(T)
+        :提供双方登记信息，提供法律支持;
+    endif
+endif
+:评价环节;
+note left:预交的保证金抽成后根据评价结果\n按照一定比例返还给双方
+end
+@enduml
