@@ -2,6 +2,9 @@
 
 [[TOC]]
 
+## 文档
+- [需求规约](docs/demand.md)
+
 ## 需要用到的工具
 ### git
 git是一个版本控制工具，[下载](https://git-scm.com/downloads)安装并配置环境变量。

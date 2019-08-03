@@ -4,10 +4,13 @@
 
 [[TOC]]
 
+## 文档
+- [需求规约](docs/demand.md)
+
 ## 功能模块
-![功能模块](docs/diagrams/out/功能模块.svg)
+![功能模块](docs/diagrams/out/功能模块.png)
 
 ## 业务流程
-![业务流程1](docs/diagrams/out/总体业务流程1.svg)
+![业务流程1](docs/diagrams/out/总体业务流程1.png)
 
-![业务流程2](docs/diagrams/out/总体业务流程2.svg)
+![业务流程2](docs/diagrams/out/总体业务流程2.png)
