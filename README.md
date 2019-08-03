@@ -6,6 +6,7 @@
 
 ## 文档
 - [需求规约](docs/demand.md)
+- [数据库结构](docs/qiruan.sql)
 
 ## 功能模块
 ![功能模块](docs/diagrams/out/功能模块.png)
