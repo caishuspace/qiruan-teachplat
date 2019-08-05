@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 03/08/2019 22:36:43
+ Date: 06/08/2019 01:11:46
 */
 
 SET NAMES utf8mb4;
@@ -100,6 +100,18 @@ CREATE TABLE `message`  (
   `uid` int(11) NOT NULL COMMENT '留言用户编号',
   `content` varchar(2047) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '留言内容',
   PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for persistent_logins
+-- ----------------------------
+DROP TABLE IF EXISTS `persistent_logins`;
+CREATE TABLE `persistent_logins`  (
+  `username` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `series` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `last_used` timestamp(0) NULL,
+  PRIMARY KEY (`series`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
