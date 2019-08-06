@@ -5,7 +5,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import team.qiruan.domain.User;
@@ -15,8 +14,6 @@ import team.qiruan.service.UserService;
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private UserService userService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -24,7 +21,6 @@ public class MyUserDetailsService implements UserDetailsService {
         if(user==null){
             throw new UsernameNotFoundException(username);
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return new org.springframework.security.core.userdetails.User(username,
                 user.getPassword(), true, true, true, true,
                 AuthorityUtils.commaSeparatedStringToAuthorityList(user.getPrivilegeName()));

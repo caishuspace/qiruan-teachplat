@@ -12,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+/**
+ * @author 刘海鑫
+ */
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
@@ -21,13 +24,15 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginProcessingUrl("/auth/login").loginPage("/auth/require").and().authorizeRequests()
-                .antMatchers("/auth/**", "/webjars/**", "/css/**", "/js/**").permitAll().anyRequest().authenticated().and()
-                .rememberMe().tokenRepository(persistentTokenRepository()) // 配置 token 持久化仓库
-                .tokenValiditySeconds(3600*24*7) // remember 过期时间，单为秒
+        http.formLogin().loginProcessingUrl("/auth/login")
+                // .loginPage("/auth/require")
+                .loginPage("/auth/page-login").defaultSuccessUrl("/auth/success").and().authorizeRequests()
+                .antMatchers("/auth/**", "/webjars/**", "/css/**", "/js/**").permitAll()// 允许静态资源
+                .antMatchers("/user/**").authenticated()// 用户信息需要认证
+                .and().rememberMe().tokenRepository(persistentTokenRepository()) // 配置token持久化仓库
+                .tokenValiditySeconds(3600 * 24 * 7) // remember 过期时间，单为秒
                 .userDetailsService(userDetailService) // 处理自动登录逻辑
-                .and().logout().logoutUrl("/auth/logout")
-                ;
+                .and().logout().logoutUrl("/auth/logout");
     }
 
     @Bean
@@ -35,10 +40,15 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * 记住我相关功能
+     * @return
+     */
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
+        //如果数据库中没有表persistent_logins，使用下面这行代码创建表。
         // jdbcTokenRepository.setCreateTableOnStartup(true);
         return jdbcTokenRepository;
     }

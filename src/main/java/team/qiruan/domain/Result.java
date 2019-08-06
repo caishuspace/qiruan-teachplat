@@ -1,5 +1,8 @@
 package team.qiruan.domain;
 
+/**
+ * 标准返回结果实体类
+ */
 public class Result {
     Integer code;
     String message;
@@ -34,6 +37,11 @@ public class Result {
         return "Result [code=" + code + ", content=" + content + ", message=" + message + "]";
     }
 
+    /**
+     * 标准返回结果
+     * @param code 状态代码
+     * @param message 提示信息
+     */
     public Result(Integer code, String message) {
         this.code = code;
         this.message = message;
@@ -42,6 +50,12 @@ public class Result {
     public Result() {
     }
 
+    /**
+     * 标准返回结果
+     * @param code 状态代码
+     * @param message 提示信息
+     * @param content 附加内容
+     */
     public Result(Integer code, String message, Object content) {
         this.code = code;
         this.message = message;

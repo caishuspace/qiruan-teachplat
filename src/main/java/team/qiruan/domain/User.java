@@ -43,6 +43,10 @@ public class User {
         this.privilege = privilege;
     }
 
+    /**
+     * 返回用户类型名称
+     * @return
+     */
     public String getPrivilegeName() {
         switch (privilege) {
         case 1:

@@ -10,9 +10,12 @@ public class RegUser {
     String name;
     @NotEmpty
     String password;
+    @NotEmpty
+    String password2;
+
     @Range(min = 1, max = 2, message = "用户类型不存在！")
     @NotNull
-    Integer privilege;
+    Integer usertype;
 
     public String getName() {
         return name;
@@ -30,16 +33,12 @@ public class RegUser {
         this.password = password;
     }
 
-    public Integer getPrivilege() {
-        return privilege;
-    }
-
-    public void setPrivilege(Integer privilege) {
-        this.privilege = privilege;
-    }
-
+    /**
+     * 获取当前用户的类型名称
+     * @return
+     */
     public String getPrivilegeName() {
-        switch (privilege) {
+        switch (usertype) {
         case 1:
             return "student";
         case 2:
@@ -53,6 +52,22 @@ public class RegUser {
 
     @Override
     public String toString() {
-        return "RegUser [name=" + name + ", password=" + password + ", privilege=" + privilege + "]";
+        return "RegUser [name=" + name + ", password=" + password + ", usertype=" + usertype + "]";
+    }
+
+    public Integer getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(Integer usertype) {
+        this.usertype = usertype;
+    }
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
     }
 }
