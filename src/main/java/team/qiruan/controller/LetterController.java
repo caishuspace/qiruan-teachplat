@@ -38,7 +38,7 @@ public class LetterController {
             model.addAttribute("text", "发送失败，用户未登录！");
         } else {
             content=JsoupUtil.clean(content);
-            if (letterService.sendLetter(principal.getName(),title,to, content)) {
+            if (letterService.sendLetter(principal.getName(),to,title, content)) {
                 model.addAttribute("text", "发送成功！");
             } else {
                 model.addAttribute("text", "发送失败。");
