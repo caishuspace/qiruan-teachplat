@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<!--显示站内信的页面模板，各种信箱均是从这里显示-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>站内信</title>
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            //添加csrf的header
+            jQuery.ajaxSetup({
+                "beforeSend": function (request) {
+                    request.setRequestHeader(
+                        /*[[${_csrf.headerName}]]*/"${_csrf.headerName}", 
+                        /*[[${_csrf.token}]]*/"${_csrf.token}"
+                        );
+                }
+            });
+            //点击总复选框其他复选框联动
+            $(".chk-father").change(function () {
+                $(".chk-child").prop('checked', $(this).prop('checked'));
+            });
+            //打开站内信
+            $(".action-show").click(function () {
+                var box=/*[[${box}]]*/"all";
+                $.get("/letter/letter/" + $(this).attr('content'),{
+                    open:!(box=="send")
+                },function (data, status) {
+                    if (status != "success") {
+                        return;
+                    }
+                    $('#exampleModalLongTitle').text(data.title + '——站内信');
+                    $('#exampleModalLongContent').html(data.content);
+                    $('#exampleModalLong').modal({});
+                });
+            });
+            //回复站内信
+            $("#btn-reply").click(function () {
+                $(".chk-child").each(function () {
+                    if ($(this).prop('checked') == true) {
+                        location.href = "/letter/send?to=" + $(this).attr('send');
+                    }
+                });
+            });
+            //删除站内信，目前存在问题
+            //因为只存储了一份，所以只允许收件人删除站内信
+            $("#btn-del").click(function () {
+                $(".chk-child").each(function () {
+                    if ($(this).prop('checked') != true) {
+                        return;
+                    }
+                    if (confirm("是否删除" + $(this).attr('title'))) {
+                        $.post("/letter/del", {
+                            id: $(this).attr("lid")
+                        }, function (data, status) {
+                            if(data.code!=0){
+                                alert(data.message);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header th:replace="common/model::header">头部</header>
+
+    <main class="container">
+        <div class="row">
+            <div>
+                <h1><i class="fa fa-envelope-o"></i> Mailbox</h1>
+                <p>站内信管理</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><a class="mb-2 btn btn-primary btn-block" href="/letter/send">写信</a>
+                <div class="tile p-0">
+                    <h4 class="tile-title folder-head">Folders</h4>
+                    <div class="tile-body">
+                        <ul class="nav nav-pills flex-column mail-nav">
+                            <li class="nav-item"><a class="nav-link" href="/letter/mailbox?box=unread"><i
+                                        class="fa fa-envelope-o fa-fw"></i>
+                                    未读信件<span class="badge badge-pill badge-primary float-right"
+                                        th:remove="all">12</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="/letter/mailbox?box=all"><i
+                                        class="fa fa-inbox fa-fw"></i>
+                                    所有信件</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/letter/mailbox?box=send"><i
+                                        class="fa fa-paper-plane-o fa-fw"></i>
+                                    已发送</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tile">
+                    <div class="mailbox-controls">
+                        <div class="animated-checkbox">
+                            <label>
+                                <input type="checkbox" class="chk-father"><span class="label-text"></span>
+                            </label>
+                        </div>
+                        <h4 th:if="${box=='unread'}">未读信件</h4>
+                        <h4 th:if="${box=='all'}">所有信件</h4>
+                        <h4 th:if="${box=='send'}">已发送</h4>
+                        <div class="btn-group">
+                            <button id="btn-del" class="btn btn-primary btn-sm" type="button" data-toggle="tooltip"
+                                title="删除"><i class="fa fa-trash-o"></i></button>
+                            <button id="btn-reply" class="btn btn-primary btn-sm" type="button" data-toggle="tooltip"
+                                title="回复"><i class="fa fa-reply"></i></button>
+                            <!-- <button class="btn btn-primary btn-sm" type="button" data-toggle="tooltip" title="转发"><i
+                                    class="fa fa-share"></i></button> -->
+                            <button class="btn btn-primary btn-sm" type="button" onclick="javascrit:location.reload();"
+                                data-toggle="tooltip" title="刷新"><i class="fa fa-refresh"></i></button>
+                        </div>
+                    </div>
+                    <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover">
+                            <tbody th:remove="all-but-first">
+                                <tr th:each="i:${mails}">
+                                    <td>
+                                        <div class="animated-checkbox">
+                                            <label>
+                                                <input type="checkbox" class="chk-child" th:send="${i.send}"
+                                                    th:title="${i.title}" th:lid="${i.id}">
+                                                <span class="label-text">
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td th:remove="all"><a href="#"><i class="fa fa-star-o"></i></a></td>
+                                    <td><a class="action-show" href="javascript:;" th:text="${i.send}" th:if="box==send"
+                                            th:content="${i.id}">John Doe</a></td>
+                                    <td><a class="action-show" href="javascript:;" th:text="${i.recieve}"
+                                            th:unless="box==send" th:content="${i.id}">John
+                                            Doe</a></td>
+                                    <td class="mail-subject" th:text="${i.title==null?'NO TITLED':i.title}"><b>A report
+                                            on project almanac</b> -
+                                        Lorem ipsum dolor sit
+                                        amet adipisicing elit...</td>
+                                    <td th:remove="body"><i class="fa fa-paperclip"></i></td>
+                                    <td th:text="${i.time}">8 mins ago</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="animated-checkbox">
+                                            <label>
+                                                <input type="checkbox"><span class="label-text"> </span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td><a href="#"><i class="fa fa-star"></i></a></td>
+                                    <td><a href="read-mail.html">John Doe</a></td>
+                                    <td><b>A report on some good project</b> - Lorem ipsum dolor sit amet adipisicing
+                                        elit...</td>
+                                    <td></td>
+                                    <td>15 mins ago</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="animated-checkbox">
+                                            <label>
+                                                <input type="checkbox"><span class="label-text"> </span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td><a href="#"><i class="fa fa-star-o"></i></a></td>
+                                    <td><a href="read-mail.html">John Doe</a></td>
+                                    <td class="mail-subject"><b>A report on project almanac</b> - Lorem ipsum dolor sit
+                                        amet adipisicing elit...</td>
+                                    <td><i class="fa fa-paperclip"></i></td>
+                                    <td>30 mins ago</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="animated-checkbox">
+                                            <label>
+                                                <input type="checkbox"><span class="label-text"> </span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td><a href="#"><i class="fa fa-star"></i></a></td>
+                                    <td><a href="read-mail.html">John Doe</a></td>
+                                    <td class="mail-subject"><b>A report on project almanac</b> - Lorem ipsum dolor sit
+                                        amet adipisicing elit...</td>
+                                    <td></td>
+                                    <td>25 December</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-right" th:remove="all"><span class="text-muted mr-2">Showing 1-15 out of 60</span>
+                        <div class="btn-group">
+                            <button class="btn btn-primary btn-sm" type="button"><i
+                                    class="fa fa-chevron-left"></i></button>
+                            <button class="btn btn-primary btn-sm" type="button"><i
+                                    class="fa fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="exampleModalLongContent">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="common/model::footer">页脚</footer>
+    <!-- Essential javascripts for application to work-->
+    <script src="/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="/js/plugins/pace.min.js"></script>
+</body>
+
+</html>

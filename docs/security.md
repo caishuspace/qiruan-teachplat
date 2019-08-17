@@ -63,6 +63,23 @@
 </script>
 ```
 
+不过最省事的方法是用这个：
+
+```html
+<script th:inline="javascript">
+    $(document).ready(function () {
+        jQuery.ajaxSetup({
+            "beforeSend": function (request) {
+                request.setRequestHeader(
+                    /*[[${_csrf.headerName}]]*/"${_csrf.headerName}", 
+                    /*[[${_csrf.token}]]*/"${_csrf.token}"
+                );
+            }
+        });
+    });
+</script>
+```
+
 *参考*
 
 - [使用SpringSecurity处理CSRF攻击](https://segmentfault.com/a/1190000018402597)

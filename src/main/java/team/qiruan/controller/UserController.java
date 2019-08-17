@@ -15,6 +15,7 @@ import team.qiruan.domain.EditUserInfo;
 import team.qiruan.domain.Result;
 import team.qiruan.domain.UserInfo;
 import team.qiruan.service.UserInfoService;
+import team.qiruan.utils.JsoupUtil;
 
 /**
  * 用户中心相关代码
@@ -55,6 +56,7 @@ public class UserController {
     @PostMapping("/update")
     @ResponseBody
     Result updateInfo(@PathVariable String username,@Valid EditUserInfo userInfo,Model model){
+        userInfo.setIntroduce(JsoupUtil.clean(userInfo.getIntroduce()));//防止xss
         if(userInfoService.updateUserInfo(username, userInfo)){
             return new Result(0,"修改成功。");
         }

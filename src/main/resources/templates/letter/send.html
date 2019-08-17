@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>写信</title>
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/wangEditor.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var E = window.wangEditor
+            var editor = new E('#div-content')
+            editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+            editor.customConfig.onchange = function (html) {
+                // 监控变化，同步更新到 textarea
+                $("#text-content").val(html);
+            }
+            editor.create()
+        });
+    </script>
+</head>
+
+<body>
+    <header th:replace="common/model::header">头部</header>
+
+    <!--编辑站内信的页面-->
+
+    <main class="container">
+        <div class="row">
+            <div>
+                <h1><i class="fa fa-pencil-square-o"></i> Send</h1>
+                <p>向其他用户发送站内信</p>
+            </div>
+        </div>
+
+        <form th:action="@{/letter/send}" method="POST">
+            <div class="form-group">
+                <label class="control-label">收件人用户名：</label>
+                <input class="form-control" type="text" placeholder="输入收件人的昵称" th:value="${to!=null?to:''}" name="to">
+            </div>
+            <div class="form-group">
+                <label class="control-label">标题：</label>
+                <input class="form-control" type="text" placeholder="输入信件标题" name="title">
+            </div>
+            <textarea placeholder="站内信内容" id="text-content" name="content" style="display: none;"></textarea>
+            <div id="div-content"></div>
+            <input class="btn btn-primary mt-3 mb-3" type="submit">
+        </form>
+
+    </main>
+
+
+    <footer th:replace="common/model::footer">页脚</footer>
+    <!-- Essential javascripts for application to work-->
+    <script src="/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="/js/plugins/pace.min.js"></script>
+</body>
+
+</html>

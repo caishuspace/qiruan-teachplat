@@ -34,11 +34,9 @@ MySQL数据库，略。
 |jdbcTemplate|数据持久化|
 |jquery|js库，简化js写法，解决兼容性问题|
 |*spring boot发送邮件*|联系会员手段|
-|*WebSocket*|在线交流功能实现|
 |*bootstrap*|css模板|
 |*拦截器/过滤器*|权限控制|
 |*spring security*|权限控制|
-|*shiro*|权限控制|
 
 ## 学习参考
 - [阿里巴巴Java开发手册](https://yq.aliyun.com/articles/69327)

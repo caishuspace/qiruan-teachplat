@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>临时主页</title>
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#usercenter").click(function () {
+                location.href = "/user/" + $("#username").val();
+            });
+        });
+    </script>
+</head>
+
+<!--一份模板，放置头部、页脚等常用组件，可用th:replace等方法引入-->
+
+<body>
+    <header id="comm_header" th:fragment="header">
+        <div class="top-bar border-bottom  d-none d-md-block text-center text-muted"
+            style="height: 40px;line-height:39px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 top-bar-1">
+                        <a href="javascript:;" class="text-muted">
+                            <i class="fa fa-mobile" aria-hidden="true"></i>
+                            <span>关注微信号</span>
+                            <img src="/img/erw.png" alt="二维码" style="width: 120px;">
+                        </a>
+                    </div>
+                    <div class="col-md-5 border-left">
+                        <i class="fa fa-phone" aria-hidden="true"></i> 188-8888-8888（服务时间：9:00-21:00）
+                    </div>
+                    <div class="col-md-2 border-left">
+                        <span sec:authorize="isAnonymous()">大学生兼职</span>
+                        <span sec:authorize="!isAnonymous()" sec:authentication="principal.username"></span>
+                    </div>
+                    <div class="col-md-3 border-left">
+                        <div sec:authorize="isAnonymous()">
+                            <a href="/auth/page-reg" class="btn btn-success btn-sm">免费注册</a>
+                            <a href="/auth/page-login" class="ml-2 text-muted">立即登录</a>
+                        </div>
+                        <div sec:authorize="!isAnonymous()">
+                            <form th:action="@{/auth/logout}" method="POST">
+                                <a th:href="@{/user/{username}(username=${#authentication.name})}" class="btn btn-info btn-sm">用户中心</a>
+                                <input type="submit" class="ml-2 btn btn-danger btn-sm" value="退出登录" onclick="return confirm('是否退出登录？');">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light border-bottom">
+            <div class="container">
+                <a class="navbar-brand d-flex justify-content-center align-items-center" href="/">
+                    <img src="/img/logo.png" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto text-center">
+                        <li id="navlink_index" class="nav-item">
+                            <a class="nav-link" href="/">首页</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">招聘信息</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">求职信息</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <select name="type" id="" class="form-control">
+                            <option value="student">家教</option>
+                            <option value="agency">家长</option>
+                        </select>
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+
+        <h1>临时主页</h1>
+        <q>一个临时的主页，访问各个模块，用来测试方便的。</q>
+        <p><a href="/auth/page-reg">注册</a></p>
+        <p><a href="/auth/page-login">登录</a></p>
+        <p><input id="username"><button id="usercenter">进入用户中心</button></p>
+        <p><a href="/msg/demo.html">留言demo</a></p>
+        <form action="/letter/send">
+            <input name="to">
+            <input type="submit" value="发送站内信">
+        </form>
+        <p><a href="/letter/mailbox">信箱</a></p>
+    </div>
+
+    <section id="comm_friend" th:fragment="friend">
+        <div class="container">
+            <div class="alert alert-light" role="alert">
+                家教网，为您提供信誉好，能力强，服务好的家教老师，一对一辅导快速提高孩子成绩！特高级教师，名校大学生家教一应俱全！是您选择家教的好网站！感谢您访问常青藤家教网。
+            </div>
+        </div>
+
+        <div class="container friendship-link">
+            <div class="row">
+                <div class="col-lg-2"><b>友情链接</b></div>
+                <div class="col-lg-10">
+                    <a href="https://ntutn.top">归零幻想</a>
+                    <a href="https://www.baidu.com">百度</a>
+                    <a href=""></a>
+                    <a href=""></a>
+                    <a href=""></a>
+                    <a href=""></a>
+                    <a href=""></a>
+                    <a href=""></a>
+                    <a href=""></a>
+                    <a href=""></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-top" id="comm-footer" th:fragment="footer">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <a href="">关于我们</a>
+                <a href="">使用协议</a>
+                <a href="">联系我们</a>
+            </div>
+            <div class="row d-flex justify-content-center text-muted">
+                Copyright @ 齐软小分队 All Rights Reserved 京ICP备11015xxx号 联系我们：service@xxx.com
+            </div>
+        </div>
+    </footer>
+
+    <!-- Essential javascripts for application to work-->
+    <script src="/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="/js/plugins/pace.min.js"></script>
+</body>
+
+</html>

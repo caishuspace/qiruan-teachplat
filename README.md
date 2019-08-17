@@ -14,6 +14,8 @@
 
 - [用户管理](docs/security.md)
 
+- [站内信](docs/letter.md)
+
 ## 业务流程
 ![业务流程1](docs/diagrams/out/总体业务流程1.png)
 
