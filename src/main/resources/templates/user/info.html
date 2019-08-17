@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -29,6 +30,10 @@
             }
             editor.create()
             $("#btn-logout").click(function () {
+                //退出登录要用post方法，用form提交是为了省事
+                //虽然后来找到了更好的方法，但我懒得改
+                //“又不是不能用”
+                //^_^
                 if (!confirm("是否退出登录？")) {
                     return;
                 }
@@ -47,6 +52,8 @@
                         alert("提交失败，请检查输入！");
                     },
                     complete: function () {
+                        alert("更新成功");
+                        location.reload();
                     },
                     success: function (data) {
                         alert(data.message);
@@ -60,6 +67,8 @@
 </head>
 
 <body>
+    <header th:replace="common/model::header">头部</header>
+
     <!--退出登录只接受post请求，并且要带csrf的roken-->
     <div class="container">
         <div class="tile">
@@ -88,6 +97,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">出生日期</label>
+                        <!--vali-Admin的日期选择控件，生日应只能选择今天以前的日期-->
                         <input id="birthday" name="birthday" type="text" class="form-control" data-date-end-date="0d"
                             placeholder="点击选择出生日期" th:value="${#dates.format(userinfo.birthday, 'MM/dd/yyyy')}">
                     </div>
@@ -115,6 +125,9 @@
             </div>
         </div>
     </div>
+
+    <footer th:replace="common/model::footer">页脚</footer>
+
     <!-- Essential javascripts for application to work-->
     <script src="/js/main.js"></script>
     <!-- The javascript plugin to display page loading on top-->

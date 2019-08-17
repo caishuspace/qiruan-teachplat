@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>临时主页</title>
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#usercenter").click(function () {
+                location.href = "/user/" + $("#username").val();
+            });
+            $("#navlink_index").addClass("active");
+        });
+    </script>
+</head>
+
+<body>
+    <header th:replace="common/model::header">头部</header>
+    <div class="container">
+
+        <h1>临时主页</h1>
+        <q>一个临时的主页，访问各个模块，用来测试方便的。</q>
+        <p><a href="/auth/page-reg">注册</a></p>
+        <p><a href="/auth/page-login">登录</a></p>
+        <p><input id="username"><button id="usercenter">进入用户中心</button></p>
+        <p><a href="/msg/demo.html">留言demo</a></p>
+        <form action="/letter/send">
+            <input name="to">
+            <input type="submit" value="发送站内信">
+        </form>
+        <p><a href="/letter/mailbox">信箱</a></p>
+    </div>
+
+    <section th:replace="common/model::friend">友情链接</section>
+
+    <footer th:replace="common/model::footer">页脚</footer>
+
+    <!-- Essential javascripts for application to work-->
+    <script src="/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="/js/plugins/pace.min.js"></script>
+</body>
+
+</html>

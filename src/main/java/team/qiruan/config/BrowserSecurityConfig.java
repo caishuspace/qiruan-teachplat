@@ -28,7 +28,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 // .loginPage("/auth/require")
                 .loginPage("/auth/page-login").defaultSuccessUrl("/auth/success").and().authorizeRequests()
                 .antMatchers("/auth/**", "/webjars/**", "/css/**", "/js/**").permitAll()// 允许静态资源
-                .antMatchers("/user/**").authenticated()// 用户信息需要认证
+                .antMatchers("/user/**","/letter/**").authenticated()// 用户信息需要认证
                 .and().rememberMe().tokenRepository(persistentTokenRepository()) // 配置token持久化仓库
                 .tokenValiditySeconds(3600 * 24 * 7) // remember 过期时间，单为秒
                 .userDetailsService(userDetailService) // 处理自动登录逻辑

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/wangEditor.min.js"></script>
+    <title>留言板</title>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            ;
+        });
+    </script>
+</head>
+
+<body>
+    <div id="msg_main" class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <span class="nav-link active">评论 <span class="badge badge-info" th:text="${count}">14</span></span>
+            </li>
+        </ul>
+        <div class="media mt-3">
+            <img class="mr-3" src="/favicon.ico" alt="Generic placeholder image" width="64px">
+            <div class="media-body card bg-white">
+                <div id="msg_content">
+
+                </div>
+            </div>
+        </div>
+        <div id="msg_submit_group" class="text-right mt-2">
+            <button id="msg_submit" class="btn btn-primary">评论</button>
+        </div>
+        <div id="msg_ajax">
+            <div id="msg_history">
+                <input th:value="${belong}" id="msg_belong" type="hidden">
+                <form id="msg_form_csrf" th:action="@{/message/{belong}(belong=${belong})}" method="POST">
+                    <input id="msg_input_content" name="content" type="hidden">
+                </form>
+                <div class="media mt-3" th:each="i:${messages}">
+                    <img class="mr-3" src="/favicon.ico" alt="Generic placeholder image" width="64px">
+                    <div class="media-body card bg-light">
+                        <div class="card-body" th:utext="${i.content}">
+                            <h5 class="mt-0">Media heading</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                            Cras
+                            purus
+                            odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
+                            vulputate
+                            fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </div>
+                </div>
+                <div class="media mt-3" th:remove="all">
+                    <img class="mr-3" src="/favicon.ico" alt="Generic placeholder image" width="64px">
+                    <div class="media-body card bg-light">
+                        <div class="card-body">
+                            <h5 class="mt-0">Media heading</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                            Cras
+                            purus
+                            odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
+                            vulputate
+                            fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Essential javascripts for application to work-->
+    <script src="/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="/js/plugins/pace.min.js"></script>
+    <!--Message-->
+    <script src="/js/message/message.js"></script>
+</body>
+
+</html>

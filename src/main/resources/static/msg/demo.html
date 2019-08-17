@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<!--为演示评论功能准备的demo页-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/github-markdown.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <title>数据结构 栈应用 1 括号匹配</title>
+    <script>
+        $(document).ready(function () {
+            $("h1").each(function () {
+                if (!$(this).hasClass("card-title")) {
+                    $(this).remove();
+                }
+            });
+        });
+    </script>
+    <script>
+        (function () {
+            var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?7ef6f9c948148a6c29147d6966f60fde" : "https://jspassport.ssl.qhimg.com/11.0.1.js?7ef6f9c948148a6c29147d6966f60fde";
+            document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+    <script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?51bc77befe2eb0098197e14da67f4ff6";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script>
+        console.log("重构了代码。");
+        console.log("2019年7月23日17:37:56测试");
+        console.log("重构的代码总算完成了个大体框架，并应用到线上。");
+        console.log("现在是2019年7月25日03:23:26，奇奇怪怪的BUG是我没有清除浏览器缓存造成的，我要去睡觉了……");
+        console.log("2019年7月26日，发现统计代码没正确安装，调整配置……");
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+                aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                归零幻想</a>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li id="n_home" class="nav-item">
+                        <a class="nav-link" href="/">主页</a>
+                    </li>
+                    <li id="n_tags" class="nav-item">
+                        <a class="nav-link" href="/tags">标签</a>
+                    </li>
+                    <li id="n_rnd" class="nav-item">
+                        <a class="nav-link" href="/rnd">随便看看</a>
+                    </li>
+                    <li id="n_about" class="nav-item">
+                        <a class="nav-link" href="/about">关于</a>
+                    </li>
+                    <li id="n_adm" class="nav-item">
+                        <a class="nav-link" href="/adm">后台管理</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 disabled popover-dismiss" type="submit"
+                        data-toggle="popover" data-trigger="focus" title="未完成的功能"
+                        data-content="搜索功能暂时还没有完成。">Search</button>
+                </form>
+            </div>
+        </nav>
+        <script>
+            $('.popover-dismiss').popover({ trigger: 'focus' });
+        </script>
+        <nav class="mt-3" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+
+                <li class="breadcrumb-item active" aria-current="page">数据结构 栈应用 1 括号匹配</li>
+            </ol>
+        </nav>
+        <div class="card mt-3 mb-3">
+            <div class="card-body markdown-body">
+                <h1 class="card-title">数据结构 栈应用 1 括号匹配</h1>
+                <h6 class="card-subtitle mb-2 text-muted">2019-04-26 00:33:45.0</h6>
+                <div class="card-text">
+                    <h1 id="h1--1-"><a name="数据结构 栈应用 1 括号匹配" class="reference-link"></a><span
+                            class="header-link octicon octicon-link"></span>数据结构 栈应用 1 括号匹配</h1>
+                    <blockquote>
+                        <p>大概是一道栈的应用的水题吧。<br>输入一行符号,以#结束，判断其中的括号是否匹配。<br>遇到左括号入栈，遇到右括号出栈。如果字符串结束栈不空，输出栈内左括号对应右括号。
+                        </p>
+                    </blockquote>
+                    <h2 id="h2-question"><a name="Question" class="reference-link"></a><span
+                            class="header-link octicon octicon-link"></span>Question</h2>
+                    <p>用栈实现：输入一行符号,以#结束，判断其中的括号是否匹配。括号包括：</p>
+                    <pre class="prettyprint linenums prettyprinted"
+                        style=""><ol class="linenums"><li class="L0"><code><span class="pun">{</span><span class="pln"> </span><span class="pun">}</span><span class="pln"> </span><span class="pun">、</span><span class="pln"> </span><span class="pun">[</span><span class="pln"> </span><span class="pun">]</span><span class="pln"> </span><span class="pun">、</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> </span><span class="pun">)、</span><span class="pln">  </span><span class="pun">&lt;</span><span class="pln"> </span><span class="pun">&gt;</span></code></li></ol></pre>
+                    <p>如果匹配，输出 <code>right</code><br>如果不匹配，给出错误提示。包括：<br>第几个符号处理时出现错误；哪几个符号失配等
+                    </p>
+                    <h2 id="h2-example"><a name="Example" class="reference-link"></a><span
+                            class="header-link octicon octicon-link"></span>Example</h2>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                    <h2 id="h2-u601Du8DEF"><a name="思路" class="reference-link"></a><span
+                            class="header-link octicon octicon-link"></span>思路</h2>
+                    <p>遇到左括号入栈，遇到右括号出栈。如果字符串结束栈不空，输出栈内左括号对应右括号。</p>
+                    <blockquote>
+                        <p>没有一遍过，因为题目中没说如果出错就不再继续处理。</p>
+                    </blockquote>
+                    <h2 id="h2-u76F8u5173"><a name="相关" class="reference-link"></a><span
+                            class="header-link octicon octicon-link"></span>相关</h2>
+                    <ol>
+                        <li>栈：顺序表，只允许在一端输入输出。</li>
+                        <li><code>getline(cin,str);</code>可输入整行，支持空格。</li>
+                        <li>如果用数组实现栈，则其存储空间必须是一次性申请得到的。</li>
+                    </ol>
+                    <h2 id="h2-answer"><a name="Answer" class="reference-link"></a><span
+                            class="header-link octicon octicon-link"></span>Answer</h2>
+                    <blockquote>
+                        <p>指定初始<code>maxsize=1</code>是我某种程度上的强迫症，反正这题时间限制很宽松。</p>
+                    </blockquote>
+                    <pre class="prettyprint linenums prettyprinted"
+                        style=""><ol class="linenums"><li class="L0"><code class="lang-c++"><span class="com">#include</span><span class="pln"> </span><span class="str">&lt;iostream&gt;</span></code></li><li class="L1"><code class="lang-c++"><span class="com">#include</span><span class="str">&lt;cstring&gt;</span></code></li><li class="L2"><code class="lang-c++"><span class="com">#include</span><span class="str">&lt;string&gt;</span></code></li><li class="L3"><code class="lang-c++"></code></li><li class="L4"><code class="lang-c++"><span class="kwd">using</span><span class="pln"> </span><span class="kwd">namespace</span><span class="pln"> std</span><span class="pun">;</span></code></li><li class="L5"><code class="lang-c++"></code></li><li class="L6"><code class="lang-c++"><span class="kwd">class</span><span class="pln"> mystack</span><span class="pun">{</span></code></li><li class="L7"><code class="lang-c++"><span class="kwd">private</span><span class="pun">:</span></code></li><li class="L8"><code class="lang-c++"><span class="pln">    </span><span class="kwd">char</span><span class="pln"> </span><span class="pun">*</span><span class="pln">data</span><span class="pun">;</span></code></li><li class="L9"><code class="lang-c++"><span class="pln">    </span><span class="kwd">int</span><span class="pln"> maxsize</span><span class="pun">;</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">    </span><span class="kwd">int</span><span class="pln"> top</span><span class="pun">;</span></code></li><li class="L1"><code class="lang-c++"><span class="kwd">public</span><span class="pun">:</span></code></li><li class="L2"><code class="lang-c++"><span class="pln">    mystack</span><span class="pun">(){</span></code></li><li class="L3"><code class="lang-c++"><span class="pln">        maxsize</span><span class="pun">=</span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L4"><code class="lang-c++"><span class="pln">        data</span><span class="pun">=</span><span class="kwd">new</span><span class="pln"> </span><span class="kwd">char</span><span class="pun">[</span><span class="pln">maxsize</span><span class="pun">];</span></code></li><li class="L5"><code class="lang-c++"><span class="pln">        top</span><span class="pun">=-</span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L6"><code class="lang-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L7"><code class="lang-c++"></code></li><li class="L8"><code class="lang-c++"><span class="pln">    </span><span class="kwd">bool</span><span class="pln"> isEmpty</span><span class="pun">(){</span></code></li><li class="L9"><code class="lang-c++"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> top</span><span class="pun">==-</span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L1"><code class="lang-c++"></code></li><li class="L2"><code class="lang-c++"><span class="pln">    </span><span class="kwd">char</span><span class="pln"> getTop</span><span class="pun">(){</span></code></li><li class="L3"><code class="lang-c++"><span class="pln">        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">top</span><span class="pun">&gt;-</span><span class="lit">1</span><span class="pun">){</span></code></li><li class="L4"><code class="lang-c++"><span class="pln">            </span><span class="kwd">return</span><span class="pln"> data</span><span class="pun">[</span><span class="pln">top</span><span class="pun">];</span></code></li><li class="L5"><code class="lang-c++"><span class="pln">        </span><span class="pun">}</span></code></li><li class="L6"><code class="lang-c++"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'\0'</span><span class="pun">;</span></code></li><li class="L7"><code class="lang-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L8"><code class="lang-c++"></code></li><li class="L9"><code class="lang-c++"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> pop</span><span class="pun">(){</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">top</span><span class="pun">&gt;=</span><span class="lit">0</span><span class="pun">){</span></code></li><li class="L1"><code class="lang-c++"><span class="pln">            top</span><span class="pun">--;</span></code></li><li class="L2"><code class="lang-c++"><span class="pln">        </span><span class="pun">}</span></code></li><li class="L3"><code class="lang-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L4"><code class="lang-c++"></code></li><li class="L5"><code class="lang-c++"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> expand</span><span class="pun">(){</span></code></li><li class="L6"><code class="lang-c++"><span class="pln">        </span><span class="kwd">char</span><span class="pun">*</span><span class="pln">tmp</span><span class="pun">=</span><span class="kwd">new</span><span class="pln"> </span><span class="kwd">char</span><span class="pun">[</span><span class="pln">maxsize</span><span class="pun">*</span><span class="lit">2</span><span class="pun">];</span></code></li><li class="L7"><code class="lang-c++"><span class="pln">        strncpy</span><span class="pun">(</span><span class="pln">tmp</span><span class="pun">,</span><span class="pln">data</span><span class="pun">,</span><span class="pln">maxsize</span><span class="pun">);</span></code></li><li class="L8"><code class="lang-c++"><span class="pln">        maxsize</span><span class="pun">*=</span><span class="lit">2</span><span class="pun">;</span></code></li><li class="L9"><code class="lang-c++"><span class="pln">        </span><span class="kwd">delete</span><span class="pun">[]</span><span class="pln"> data</span><span class="pun">;</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">        data</span><span class="pun">=</span><span class="pln">tmp</span><span class="pun">;</span></code></li><li class="L1"><code class="lang-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L2"><code class="lang-c++"></code></li><li class="L3"><code class="lang-c++"><span class="pln">    </span><span class="kwd">void</span><span class="pln"> push</span><span class="pun">(</span><span class="kwd">char</span><span class="pln"> x</span><span class="pun">){</span></code></li><li class="L4"><code class="lang-c++"><span class="pln">        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">top</span><span class="pun">+</span><span class="lit">1</span><span class="pun">==</span><span class="pln">maxsize</span><span class="pun">){</span></code></li><li class="L5"><code class="lang-c++"><span class="pln">            expand</span><span class="pun">();</span></code></li><li class="L6"><code class="lang-c++"><span class="pln">        </span><span class="pun">}</span></code></li><li class="L7"><code class="lang-c++"><span class="pln">        data</span><span class="pun">[++</span><span class="pln">top</span><span class="pun">]=</span><span class="pln">x</span><span class="pun">;</span></code></li><li class="L8"><code class="lang-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L9"><code class="lang-c++"></code></li><li class="L0"><code class="lang-c++"><span class="pln">    </span><span class="pun">~</span><span class="pln">mystack</span><span class="pun">(){</span></code></li><li class="L1"><code class="lang-c++"><span class="pln">        </span><span class="kwd">delete</span><span class="pun">[]</span><span class="pln"> data</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L3"><code class="lang-c++"><span class="pun">};</span></code></li><li class="L4"><code class="lang-c++"></code></li><li class="L5"><code class="lang-c++"><span class="kwd">char</span><span class="pln"> getPar</span><span class="pun">(</span><span class="kwd">char</span><span class="pln"> x</span><span class="pun">){</span></code></li><li class="L6"><code class="lang-c++"><span class="pln">    </span><span class="kwd">switch</span><span class="pun">(</span><span class="pln">x</span><span class="pun">){</span></code></li><li class="L7"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">'{'</span><span class="pun">:</span></code></li><li class="L8"><code class="lang-c++"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'}'</span><span class="pun">;</span></code></li><li class="L9"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">'['</span><span class="pun">:</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="str">']'</span><span class="pun">;</span></code></li><li class="L1"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">'('</span><span class="pun">:</span></code></li><li class="L2"><code class="lang-c++"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="str">')'</span><span class="pun">;</span></code></li><li class="L3"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">'&lt;'</span><span class="pun">:</span></code></li><li class="L4"><code class="lang-c++"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'&gt;'</span><span class="pun">;</span></code></li><li class="L5"><code class="lang-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L6"><code class="lang-c++"><span class="pln">    </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'\0'</span><span class="pun">;</span></code></li><li class="L7"><code class="lang-c++"><span class="pun">}</span></code></li><li class="L8"><code class="lang-c++"></code></li><li class="L9"><code class="lang-c++"><span class="kwd">int</span><span class="pln"> isKH</span><span class="pun">(</span><span class="kwd">char</span><span class="pln"> x</span><span class="pun">){</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">    </span><span class="kwd">switch</span><span class="pun">(</span><span class="pln">x</span><span class="pun">){</span></code></li><li class="L1"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">'{'</span><span class="pun">:</span></code></li><li class="L2"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">'['</span><span class="pun">:</span></code></li><li class="L3"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">'('</span><span class="pun">:</span></code></li><li class="L4"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">'&lt;'</span><span class="pun">:</span></code></li><li class="L5"><code class="lang-c++"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L6"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">'}'</span><span class="pun">:</span></code></li><li class="L7"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">']'</span><span class="pun">:</span></code></li><li class="L8"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">')'</span><span class="pun">:</span></code></li><li class="L9"><code class="lang-c++"><span class="pln">    </span><span class="kwd">case</span><span class="pln"> </span><span class="str">'&gt;'</span><span class="pun">:</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span></code></li><li class="L1"><code class="lang-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L2"><code class="lang-c++"><span class="pln">    </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></code></li><li class="L3"><code class="lang-c++"><span class="pun">}</span></code></li><li class="L4"><code class="lang-c++"></code></li><li class="L5"><code class="lang-c++"><span class="kwd">int</span><span class="pln"> main</span><span class="pun">()</span></code></li><li class="L6"><code class="lang-c++"><span class="pun">{</span></code></li><li class="L7"><code class="lang-c++"><span class="pln">    </span><span class="kwd">string</span><span class="pln"> tmp</span><span class="pun">;</span></code></li><li class="L8"><code class="lang-c++"><span class="pln">    getline</span><span class="pun">(</span><span class="pln">cin</span><span class="pun">,</span><span class="pln">tmp</span><span class="pun">);</span></code></li><li class="L9"><code class="lang-c++"><span class="pln">    mystack</span><span class="pun">*</span><span class="pln">stk</span><span class="pun">=</span><span class="kwd">new</span><span class="pln"> mystack</span><span class="pun">();</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">    </span><span class="kwd">bool</span><span class="pln"> erred</span><span class="pun">=</span><span class="kwd">false</span><span class="pun">;</span></code></li><li class="L1"><code class="lang-c++"><span class="pln">    </span><span class="kwd">for</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> i</span><span class="pun">=</span><span class="lit">0</span><span class="pun">;</span><span class="pln">i</span><span class="pun">&lt;</span><span class="pln">tmp</span><span class="pun">.</span><span class="pln">size</span><span class="pun">();</span><span class="pln">i</span><span class="pun">++){</span></code></li><li class="L2"><code class="lang-c++"><span class="pln">        </span><span class="kwd">char</span><span class="pln"> x</span><span class="pun">=</span><span class="pln">tmp</span><span class="pun">.</span><span class="pln">at</span><span class="pun">(</span><span class="pln">i</span><span class="pun">);</span></code></li><li class="L3"><code class="lang-c++"><span class="pln">        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">x</span><span class="pun">==</span><span class="str">'#'</span><span class="pun">){</span></code></li><li class="L4"><code class="lang-c++"><span class="pln">            </span><span class="kwd">if</span><span class="pun">(!</span><span class="pln">stk</span><span class="pun">-&gt;</span><span class="pln">isEmpty</span><span class="pun">()){</span></code></li><li class="L5"><code class="lang-c++"><span class="pln">                cout</span><span class="pun">&lt;&lt;</span><span class="str">"loss of right character "</span><span class="pun">;</span></code></li><li class="L6"><code class="lang-c++"><span class="pln">                </span><span class="kwd">while</span><span class="pun">(!</span><span class="pln">stk</span><span class="pun">-&gt;</span><span class="pln">isEmpty</span><span class="pun">()){</span></code></li><li class="L7"><code class="lang-c++"><span class="pln">                    cout</span><span class="pun">&lt;&lt;</span><span class="pln">getPar</span><span class="pun">(</span><span class="pln">stk</span><span class="pun">-&gt;</span><span class="pln">getTop</span><span class="pun">());</span></code></li><li class="L8"><code class="lang-c++"><span class="pln">                    stk</span><span class="pun">-&gt;</span><span class="pln">pop</span><span class="pun">();</span></code></li><li class="L9"><code class="lang-c++"><span class="pln">                </span><span class="pun">}</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">                cout</span><span class="pun">&lt;&lt;</span><span class="str">"."</span><span class="pun">&lt;&lt;</span><span class="pln">endl</span><span class="pun">;</span></code></li><li class="L1"><code class="lang-c++"><span class="pln">                </span><span class="com">//erred=true;</span></code></li><li class="L2"><code class="lang-c++"><span class="pln">                </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></code></li><li class="L3"><code class="lang-c++"><span class="pln">            </span><span class="pun">}</span></code></li><li class="L4"><code class="lang-c++"><span class="pln">            </span><span class="kwd">if</span><span class="pun">(!</span><span class="pln">erred</span><span class="pun">){</span></code></li><li class="L5"><code class="lang-c++"><span class="pln">                cout</span><span class="pun">&lt;&lt;</span><span class="str">"right"</span><span class="pun">&lt;&lt;</span><span class="pln">endl</span><span class="pun">;</span></code></li><li class="L6"><code class="lang-c++"><span class="pln">            </span><span class="pun">}</span></code></li><li class="L7"><code class="lang-c++"><span class="pln">            </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></code></li><li class="L8"><code class="lang-c++"><span class="pln">        </span><span class="pun">}</span></code></li><li class="L9"><code class="lang-c++"><span class="pln">        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">isKH</span><span class="pun">(</span><span class="pln">x</span><span class="pun">)==</span><span class="lit">1</span><span class="pun">){</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">            stk</span><span class="pun">-&gt;</span><span class="pln">push</span><span class="pun">(</span><span class="pln">x</span><span class="pun">);</span></code></li><li class="L1"><code class="lang-c++"><span class="pln">            </span><span class="kwd">continue</span><span class="pun">;</span></code></li><li class="L2"><code class="lang-c++"><span class="pln">        </span><span class="pun">}</span></code></li><li class="L3"><code class="lang-c++"><span class="pln">        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">isKH</span><span class="pun">(</span><span class="pln">x</span><span class="pun">)==</span><span class="lit">2</span><span class="pun">){</span></code></li><li class="L4"><code class="lang-c++"><span class="pln">            </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">getPar</span><span class="pun">(</span><span class="pln">stk</span><span class="pun">-&gt;</span><span class="pln">getTop</span><span class="pun">())==</span><span class="pln">x</span><span class="pun">){</span></code></li><li class="L5"><code class="lang-c++"><span class="pln">                stk</span><span class="pun">-&gt;</span><span class="pln">pop</span><span class="pun">();</span></code></li><li class="L6"><code class="lang-c++"><span class="pln">                </span><span class="kwd">continue</span><span class="pun">;</span></code></li><li class="L7"><code class="lang-c++"><span class="pln">            </span><span class="pun">}</span><span class="kwd">else</span><span class="pun">{</span></code></li><li class="L8"><code class="lang-c++"><span class="pln">                cout</span><span class="pun">&lt;&lt;</span><span class="str">"The "</span><span class="pun">&lt;&lt;</span><span class="pln">i</span><span class="pun">+</span><span class="lit">1</span><span class="pun">&lt;&lt;</span><span class="str">" character '"</span><span class="pun">&lt;&lt;</span><span class="pln">x</span><span class="pun">&lt;&lt;</span><span class="str">"' is wrong."</span><span class="pun">&lt;&lt;</span><span class="pln">endl</span><span class="pun">;</span></code></li><li class="L9"><code class="lang-c++"><span class="pln">                </span><span class="com">//erred=true;</span></code></li><li class="L0"><code class="lang-c++"><span class="pln">                </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></code></li><li class="L1"><code class="lang-c++"><span class="pln">            </span><span class="pun">}</span></code></li><li class="L2"><code class="lang-c++"><span class="pln">        </span><span class="pun">}</span></code></li><li class="L3"><code class="lang-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L4"><code class="lang-c++"><span class="pln">    </span><span class="com">//cout &lt;&lt; "Hello world!" &lt;&lt; endl;</span></code></li><li class="L5"><code class="lang-c++"><span class="pln">    </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></code></li><li class="L6"><code class="lang-c++"><span class="pun">}</span></code></li></ol></pre>
+                    <table class="coderunnerexamples" id="yui_3_17_2_1_1556022779910_86">
+                        <thead id="yui_3_17_2_1_1556022779910_85">
+                            <tr id="yui_3_17_2_1_1556022779910_84">
+                                <th class="header c0" id="yui_3_17_2_1_1556022779910_83" style="" scope="col">输入</th>
+                                <th class="header c1 lastcol" style="" scope="col">Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="r0">
+                                <td class="cell c0" style="">
+                                    <pre class="tablecell prettyprint linenums prettyprinted"
+                                        style=""><ol class="linenums"><li class="L0"><span class="kwd">as</span><span class="pun">(*</span><span class="pln">x</span><span class="pun">&lt;{(({&lt;&gt;}))}&gt;)#</span><br></li></ol></pre>
+                                </td>
+                                <td class="cell c1 lastcol" style="">
+                                    <pre class="tablecell prettyprint linenums prettyprinted"
+                                        style=""><ol class="linenums"><li class="L0"><span class="pln">right</span><br></li></ol></pre>
+                                </td>
+                            </tr>
+                            <tr class="r1">
+                                <td class="cell c0" style="">
+                                    <pre class="tablecell prettyprint linenums prettyprinted"
+                                        style=""><ol class="linenums"><li class="L0"><span class="pun">(</span><span class="pln">a</span><span class="pun">.</span><span class="pln">b</span><span class="pun">)&gt;#</span><br></li></ol></pre>
+                                </td>
+                                <td class="cell c1 lastcol" style="">
+                                    <pre class="tablecell prettyprint linenums prettyprinted"
+                                        style=""><ol class="linenums"><li class="L0"><span class="typ">The</span><span class="pln"> </span><span class="lit">6</span><span class="pln"> character </span><span class="pun">‘&gt;’</span><span class="pln"> </span><span class="kwd">is</span><span class="pln"> wrong</span><span class="pun">.</span></li></ol></pre>
+                                </td>
+                            </tr>
+                            <tr class="r0 lastrow">
+                                <td class="cell c0" style="">
+                                    <pre class="tablecell prettyprint linenums prettyprinted"
+                                        style=""><ol class="linenums"><li class="L0"><span class="pun">({()#</span></li></ol></pre>
+                                </td>
+                                <td class="cell c1 lastcol" style="">
+                                    <pre class="tablecell prettyprint linenums prettyprinted"
+                                        style=""><ol class="linenums"><li class="L0"><span class="pln">loss of right character </span><span class="pun">}).</span><br></li></ol></pre>
+                                </td>
+
+
+
+
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <script src="/js/message/load.js"></script>
+            <script>
+                showMessage("demo");
+            </script>
+        </div>
+        <!-- 页脚 -->
+        <footer class="navbar navbar-light bg-light">
+            <p>版权所有：归零幻想 ┊ 备案号：<a href="http://www.beian.miit.gov.cn/">鲁ICP备19013468号</a>┊ Powered by：归零幻想</p>
+        </footer>
+    </div>
+</body>
+
+</html>

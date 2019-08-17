@@ -2,13 +2,15 @@
 <html lang="zh-cn">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>站内信</title>
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -41,6 +43,10 @@
 </head>
 
 <body>
+    <header th:replace="common/model::header">头部</header>
+
+    <!--简单用户注册页面，需要改-->
+
     <div class="container">
         <div class="tile">
             <h1 class="tile-title">用户注册</h1>
@@ -96,6 +102,8 @@
             </div>
         </div>
     </div>
+
+    <footer th:replace="common/model::footer">页脚</footer>
     <!-- Essential javascripts for application to work-->
     <script src="/js/main.js"></script>
     <!-- The javascript plugin to display page loading on top-->
