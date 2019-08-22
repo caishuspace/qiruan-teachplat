@@ -1,15 +1,16 @@
 package team.qiruan.domain;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.util.regex.Pattern;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -217,8 +218,19 @@ public class FileController {
     @Scheduled(fixedRate = 1000 * 60)
     public void deleteUnusedFiles() {
         System.out.println("正在扫描未使用的文件……");
-        for (team.qiruan.domain.File i : fileService.getUnusedFile()) {
+        List<team.qiruan.domain.File> unusedFiles=fileService.getUnusedFile();
+        List<team.qiruan.domain.File> deletedFiles=new LinkedList<>();
+        for (team.qiruan.domain.File i : unusedFiles) {
             System.out.println("未使用的文件：" + i);
+            File file=new File(upPath+i.filename);
+            if(file.delete()){
+                deletedFiles.add(i);
+                System.out.println("删除"+i.filename+"成功。");
+            }else{
+                System.out.println("删除"+i.filename+"失败。");
+            }
         }
+        System.out.println("清理数据库已删除文件……");
+        fileService.deleteFiles(deletedFiles);
     }
 }

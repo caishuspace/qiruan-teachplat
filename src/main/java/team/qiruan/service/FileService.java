@@ -17,5 +17,18 @@ public interface FileService {
      */
     Boolean addFile(String filename,String type);
     
+    /**
+     * 获取所有未使用的图片
+     * @return
+     */
     List<File> getUnusedFile();
+
+    /**
+     * 一次性删除多个文件
+     * @param files
+     * @return
+     */
+    void deleteFiles(List<File> files);
+
+    void updateFileRelationShip(String filename,List<String> itemNames);
 }
