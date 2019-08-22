@@ -1,5 +1,7 @@
 package team.qiruan.utils;
 
+import java.util.Random;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -71,8 +73,13 @@ public class ConversionUtil {
      * @param args
      */
     public static void main(String[] args) {
+        Random ran=new Random();
         System.out.println("62进制：" + encode(Integer.MAX_VALUE, 6));
         System.out.println("62进制：" + encode(Long.MAX_VALUE, 11));
         System.out.println("10进制：" + decode("34KDUNMZwuV"));
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println(Long.MAX_VALUE);
+        System.out.println("62进制：" + encode(Math.abs(ran.nextInt()),6));
+        System.out.println("62进制：" + encode(Math.abs(ran.nextLong()),11));
     }
 }

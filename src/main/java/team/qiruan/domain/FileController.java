@@ -1,6 +1,7 @@
 package team.qiruan.domain;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.connector.ClientAbortException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.coobird.thumbnailator.Thumbnails;
 import team.qiruan.service.FileService;
 import team.qiruan.utils.ConversionUtil;
 
@@ -48,27 +51,41 @@ public class FileController {
 
     @PostMapping(value = "/up")
     @ResponseBody
-    public Result upHandle(HttpServletRequest req, @RequestParam("file") MultipartFile file, Model m)
-            throws IOException {
+    public Result upHandle(HttpServletRequest req, @RequestParam("file") MultipartFile file,
+            @RequestParam(required = false) Integer mode, @RequestParam(required = false) Integer x,
+            @RequestParam(required = false) Integer y, Model m) throws IOException {
         Random ran = new Random();
         String fileName = ConversionUtil.encode(System.currentTimeMillis(), 11)
-                + ConversionUtil.encode(ran.nextInt(), 6) + "."
+                + ConversionUtil.encode(Math.abs(ran.nextInt()), 6) + "."
                 + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
         String regEx = "[\\\\\\\\/:*?\\\"<>|]";
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher(fileName);
 
         if (matcher.matches()) {
-            return new Result(1, "文件上传失败，文件名包含异常字符！");
+            return new Result(6, "文件上传失败，文件名包含异常字符！");
         }
 
         String destFileName = upPath + fileName;
-        File destFile = new File(destFileName);
-        try {
-            file.transferTo(destFile);
-        } catch (IllegalStateException | IOException e) {
-            return new Result(1, "文件上传失败，读写异常！");
+
+        // Thumbnails.of(file.getInputStream()).toFile(destFileName);
+        if (mode == 1) {
+            // 图片按比例压缩
+            Thumbnails.of(file.getInputStream()).size(x, y).useOriginalFormat().toFile(destFileName);
+        } else if (mode == 2) {
+            // 图片强制压缩
+            Thumbnails.of(file.getInputStream()).size(x, y).keepAspectRatio(false).useOriginalFormat()
+                    .toFile(destFileName);
+        } else {
+            //文件原样保存
+            File destFile = new File(destFileName);
+            try {
+                file.transferTo(destFile);
+            } catch (IllegalStateException | IOException e) {
+                return new Result(7, "文件上传失败，读写异常！");
+            }
         }
+
         fileService.addFile(fileName, fileName.substring(fileName.lastIndexOf(".") + 1));
         return new Result(0, "图片上传成功！", "/file/down/" + fileName);
     }
@@ -194,6 +211,14 @@ public class FileController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Scheduled(fixedRate = 1000 * 60)
+    public void deleteUnusedFiles() {
+        System.out.println("正在扫描未使用的文件……");
+        for (team.qiruan.domain.File i : fileService.getUnusedFile()) {
+            System.out.println("未使用的文件：" + i);
         }
     }
 }

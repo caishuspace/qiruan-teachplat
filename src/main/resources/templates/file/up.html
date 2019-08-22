@@ -1,15 +1,80 @@
 <html lang="zh-cn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>文件上传测试</title>
+    <title>文件上传测试页面</title>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            jQuery.ajaxSetup({
+                "beforeSend": function (request) {
+                    request.setRequestHeader(
+                            /*[[${_csrf.headerName}]]*/"${_csrf.headerName}",
+                            /*[[${_csrf.token}]]*/"${_csrf.token}"
+                    );
+                }
+            });
+            $("#button2").click(function () {
+                $("#file2").click();
+                $("#file2").change(function () {
+                    var data = new FormData();
+                    var files = $('#file2').prop('files');
+                    data.append('file', files[0]);
+                    if($("#chk_img").is(':checked')){
+                        data.append('x',$("#input2_x").val());
+                        data.append('y',$("#input2_y").val());
+                        if($("#chk_zip").is(':checked')){
+                            data.append('mode',1);
+                        }else{
+                            data.append('mode',2);
+                        }
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: "/file/up",
+                        data: data,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function (ret) {
+                            if (ret.code == 0) {
+                                $("#a_url").attr('href',ret.content);
+                                alert('上传成功，点击下方超链接下载。');
+                            } else {
+                                alert(ret.msg);
+                            }
+                        }
+                    }).fail(function () {
+                        alert("文件上传失败，请检查网络！");
+                    });
+                    $("#file2").replaceWith($("#file2").prop('outerHTML'));
+                });
+            });
+        });
+    </script>
 </head>
+
 <body>
     <h1>文件上传测试</h1>
+    <h2>form方式上传</h2>
     <form th:action="@{/file/up}" method="post" enctype="multipart/form-data">
         <input type="file" name="file" id="file">
         <input type="submit" value="上传">
     </form>
+    <h2>jquery上传&图片压缩</h2>
+    <form enctype="multipart/form-data">
+        <input type="file" id="file2" style="display:none;">
+        <input type="checkbox" id="chk_img">
+        <label for="chk_img">图片压缩</label><br>
+        <input type="checkbox" id="chk_zip">
+        <label for="chk_zip">保持纵横比</label><br>
+        <input type="text" id="input2_x" placeholder="图片压缩尺寸x" value="50">
+        <input type="text" id="input2_y" placeholder="图片压缩尺寸y" value="50"><br>
+        <input type="button" value="选择文件" id="button2">
+    </form>
+    <a id="a_url" href="#">点击这里下载你上传的文件</a>
 </body>
+
 </html>
