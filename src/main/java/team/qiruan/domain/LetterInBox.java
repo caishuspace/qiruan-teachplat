@@ -4,7 +4,6 @@ import java.sql.Date;
 
 /**
  * 用以获取mailbox用的letter信息
- * TODO content等字段没有用到
  */
 public class LetterInBox {
 
