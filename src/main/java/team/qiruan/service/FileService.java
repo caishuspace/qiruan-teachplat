@@ -30,5 +30,10 @@ public interface FileService {
      */
     void deleteFiles(List<File> files);
 
-    void updateFileRelationShip(String filename,List<String> itemNames);
+    /**
+     * 更新文件与页面的依赖关系
+     * @param itemName
+     * @param filenames
+     */
+    void updateFileRelationShip(String itemName,List<String> filenames);
 }

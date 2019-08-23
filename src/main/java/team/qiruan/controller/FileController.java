@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import team.qiruan.domain.Result;
 import team.qiruan.service.FileService;
@@ -39,6 +40,7 @@ import team.qiruan.utils.ConversionUtil;
  * FileController
  */
 @RequestMapping("/file")
+@Slf4j
 public class FileController {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileController.class);
     @Autowired

@@ -107,6 +107,12 @@
             <artifactId>thumbnailator</artifactId>
             <version>[0.4, 0.5)</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -115,5 +121,5 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>
+    </build>undefined
 </project>
