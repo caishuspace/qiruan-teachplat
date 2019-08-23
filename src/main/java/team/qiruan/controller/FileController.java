@@ -1,4 +1,4 @@
-package team.qiruan.domain;
+package team.qiruan.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.connector.ClientAbortException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.coobird.thumbnailator.Thumbnails;
+import team.qiruan.domain.Result;
 import team.qiruan.service.FileService;
 import team.qiruan.utils.ConversionUtil;
 
@@ -40,10 +40,12 @@ import team.qiruan.utils.ConversionUtil;
  */
 @RequestMapping("/file")
 public class FileController {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileController.class);
     @Autowired
     private FileService fileService;
     @Value("${qiruan.uppath}")
     private String upPath;
+    
 
     @GetMapping("/up")
     String up() {
@@ -78,7 +80,7 @@ public class FileController {
             Thumbnails.of(file.getInputStream()).size(x, y).keepAspectRatio(false).useOriginalFormat()
                     .toFile(destFileName);
         } else {
-            //文件原样保存
+            // 文件原样保存
             File destFile = new File(destFileName);
             try {
                 file.transferTo(destFile);
@@ -215,22 +217,26 @@ public class FileController {
         }
     }
 
-    @Scheduled(fixedRate = 1000 * 60)
+    /**
+     * 定时删除未被使用的文件
+     * 开发过程中可以把@Scheduled注解注释掉
+     */
+    // @Scheduled(fixedRate = 1000 * 60 * 24)
     public void deleteUnusedFiles() {
         System.out.println("正在扫描未使用的文件……");
-        List<team.qiruan.domain.File> unusedFiles=fileService.getUnusedFile();
-        List<team.qiruan.domain.File> deletedFiles=new LinkedList<>();
+        List<team.qiruan.domain.File> unusedFiles = fileService.getUnusedFile();
+        List<team.qiruan.domain.File> deletedFiles = new LinkedList<>();
         for (team.qiruan.domain.File i : unusedFiles) {
             System.out.println("未使用的文件：" + i);
-            File file=new File(upPath+i.filename);
-            if(file.delete()){
+            File file = new File(upPath + i.getFilename());
+            if (file.delete()) {
                 deletedFiles.add(i);
-                System.out.println("删除"+i.filename+"成功。");
-            }else{
-                System.out.println("删除"+i.filename+"失败。");
+                System.out.println("删除" + i.getFilename() + "成功。");
+            } else {
+                System.out.println("删除" + i.getFilename() + "失败。");
             }
         }
-        System.out.println("清理数据库已删除文件……");
+        log.info("删除数据库中的记录共{}条……",deletedFiles.size());
         fileService.deleteFiles(deletedFiles);
     }
 }
