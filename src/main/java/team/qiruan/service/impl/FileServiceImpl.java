@@ -41,12 +41,12 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void updateFileRelationShip(String filename, List<String> itemNames) {
-        jdbcTemplate.update("DELETE FROM filerel WHERE fid=(SELECT id FROM file WHERE filename=?)",filename);
+    public void updateFileRelationShip(String itemName, List<String> filenames) {
+        jdbcTemplate.update("DELETE FROM filerel WHERE itemname=?",itemName);
         List<Object[]>args=new LinkedList<>();
-        for (String i : itemNames) {
-            args.add(new Object[]{filename,i});
+        for (String i : filenames) {
+            args.add(new Object[]{i,itemName});
         }
-        jdbcTemplate.batchUpdate("INSERT INTO filerel(fid,itemname)values((SELECT id FROM file WHERE filename=?),?)");
+        jdbcTemplate.batchUpdate("INSERT INTO filerel(fid,itemname)values((SELECT id FROM file WHERE filename=?),?)",args);
     }
 }

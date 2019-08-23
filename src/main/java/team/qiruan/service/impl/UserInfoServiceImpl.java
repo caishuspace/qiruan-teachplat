@@ -35,4 +35,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         )>0;
 	}
 
+    @Override
+    public Boolean updateAvatar(String username, String avatar) {
+        return jdbcTemplate.update("UPDATE userinfo SET avatar=? WHERE uid=(SELECT id FROM user WHERE name=?)", avatar,username)>0;
+    }
+
 }

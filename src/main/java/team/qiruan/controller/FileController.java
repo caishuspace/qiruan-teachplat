@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.connector.ClientAbortException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,6 @@ import team.qiruan.utils.ConversionUtil;
 @RequestMapping("/file")
 @Slf4j
 public class FileController {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileController.class);
     @Autowired
     private FileService fileService;
     @Value("${qiruan.uppath}")
@@ -223,22 +223,23 @@ public class FileController {
      * 定时删除未被使用的文件
      * 开发过程中可以把@Scheduled注解注释掉
      */
-    // @Scheduled(fixedRate = 1000 * 60 * 24)
+    @Scheduled(fixedRate = 1000 * 60 * 24)
     public void deleteUnusedFiles() {
-        System.out.println("正在扫描未使用的文件……");
+        log.debug("正在扫描未使用的文件……");
         List<team.qiruan.domain.File> unusedFiles = fileService.getUnusedFile();
         List<team.qiruan.domain.File> deletedFiles = new LinkedList<>();
         for (team.qiruan.domain.File i : unusedFiles) {
-            System.out.println("未使用的文件：" + i);
+            log.trace("未使用的文件：" + i);
             File file = new File(upPath + i.getFilename());
             if (file.delete()) {
                 deletedFiles.add(i);
-                System.out.println("删除" + i.getFilename() + "成功。");
+                log.debug("删除{}成功。",i.getFilename());
             } else {
                 System.out.println("删除" + i.getFilename() + "失败。");
+                log.warn("删除{}失败", i.getFilename());
             }
         }
-        log.info("删除数据库中的记录共{}条……",deletedFiles.size());
+        log.debug("删除数据库中的记录共{}条……",deletedFiles.size());
         fileService.deleteFiles(deletedFiles);
     }
 }

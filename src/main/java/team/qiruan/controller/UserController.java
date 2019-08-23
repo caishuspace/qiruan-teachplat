@@ -1,5 +1,7 @@
 package team.qiruan.controller;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.extern.slf4j.Slf4j;
 import team.qiruan.domain.EditUserInfo;
 import team.qiruan.domain.Result;
 import team.qiruan.domain.UserInfo;
+import team.qiruan.service.FileService;
 import team.qiruan.service.UserInfoService;
 import team.qiruan.utils.JsoupUtil;
 
@@ -25,9 +30,13 @@ import team.qiruan.utils.JsoupUtil;
  */
 
 @Controller
+@Slf4j
 @RequestMapping("/user/{username}")
 public class UserController {
-    @Autowired UserInfoService userInfoService;
+    @Autowired 
+    private UserInfoService userInfoService;
+    @Autowired
+    private FileService fileService;
 
     /**
      * 展示用户信息
@@ -55,11 +64,23 @@ public class UserController {
      */
     @PostMapping("/update")
     @ResponseBody
-    Result updateInfo(@PathVariable String username,@Valid EditUserInfo userInfo,Model model){
+    Result updateInfo(@PathVariable String username,@Valid EditUserInfo userInfo){
         userInfo.setIntroduce(JsoupUtil.clean(userInfo.getIntroduce()));//防止xss
         if(userInfoService.updateUserInfo(username, userInfo)){
             return new Result(0,"修改成功。");
         }
         return new Result(3,"修改失败，发生未知错误。");
+    }
+
+    @PostMapping("/avatar")
+    @ResponseBody
+    Result updateAvatar(@PathVariable String username,@RequestParam String avatar){
+        log.trace("{}修改头像为{}", username,avatar);
+        avatar=avatar.replace("/file/down/", "");
+        if(userInfoService.updateAvatar(username, avatar)){
+            fileService.updateFileRelationShip("avatar_"+username,Arrays.asList(avatar));
+            return new Result(0,"头像修改成功！",avatar);
+        }
+        return new Result(8,"头像保存失败。");
     }
 }
