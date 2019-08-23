@@ -20,4 +20,12 @@ public interface UserInfoService {
      * @return 是否更新成功
      */
     Boolean updateUserInfo(String username,EditUserInfo userInfo);
+
+    /**
+     * 修改头像
+     * @param username
+     * @param avatar
+     * @return
+     */
+    Boolean updateAvatar(String username,String avatar);
 }

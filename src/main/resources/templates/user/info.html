@@ -15,8 +15,16 @@
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/wangEditor.min.js"></script>
 
-    <script>
+    <script th:inline="javascript">
         $(document).ready(function () {
+            jQuery.ajaxSetup({
+                "beforeSend": function (request) {
+                    request.setRequestHeader(
+                    /*[[${_csrf.headerName}]]*/"${_csrf.headerName}",
+                    /*[[${_csrf.token}]]*/"${_csrf.token}"
+                    );
+                }
+            });
             $('#birthday').datepicker({
                 format: "dd/mm/yyyy",
                 autoclose: true
@@ -60,10 +68,46 @@
                     }
                 });
             });
+            $("#a_editavatar").click(function () {
+                $("#file_avatar").click();
+                $("#file_avatar").change(function () {
+                    var data = new FormData();
+                    var files = $('#file_avatar').prop('files');
+                    data.append('file', files[0]);
+                    data.append('x', 128);
+                    data.append('y', 128);
+                    data.append('mode', 2);
+                    $.ajax({
+                        type: 'POST',
+                        url: "/file/up",
+                        data: data,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function (ret) {
+                            if (ret.code == 0) {
+                                $("#img_avatar").attr('src', ret.content);
+                                $.post(
+                                    "/user/"
+                                    +/*[[${username}]]*/"admin"
+                                    + "/avatar",{
+                                        avatar:ret.content
+                                    }
+                                );
+                            } else {
+                                alert(ret.msg);
+                            }
+                        }
+                    }).fail(function () {
+                        alert("文件上传失败，请检查网络！");
+                    });                
+                    $("#file_avatar").replaceWith($("#file_avatar").prop('outerHTML'));
+                });
+            });
         });
     </script>
 
-    <title>注册 - 家教系统</title>
+    <title>用户信息 - 家教系统</title>
 </head>
 
 <body>
@@ -71,10 +115,32 @@
 
     <!--退出登录只接受post请求，并且要带csrf的roken-->
     <div class="container">
-        <div class="tile">
-            <h1 class="tile-title" th:text="${username+'的个人中心'}">用户个人信息</h1>
-            <div class="tile-body">
-                <form id="form-info" method="POST" th:action="@{{username}/update(username=${username})}">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <h4 class="card-header" th:text="${username+'的个人中心'}">Card header</h4>
+                    <div class="card-body">
+                        <img id="img_avatar" style="height: 128px; width: 128px;; display: block;"
+                            th:src="@{/file/down/{avatar}(avatar=${userinfo.avatar})}" alt="Card image"></div>
+                    <div class="card-body">
+                        <a id="a_editavatar" class="card-link" href="javascript:;">修改头像</a>
+                    </div>
+                    <form enctype="multipart/form-data">
+                        <input type="file" id="file_avatar" style="display:none;">
+                    </form>
+                </div>
+                <div class="bs-component mt-3">
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action active" href="javascript:;">基本资料</a>
+                        <a class="list-group-item list-group-item-action" href="#">安全中心</a>
+                        <a class="list-group-item list-group-item-action disabled" href="/letter/mailbox">站内信箱</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tile">
+                    <div class="tile-body">
+                        <form id="form-info" method="POST" th:action="@{{username}/update(username=${username})}">
                     <h4 class="line-head">Information</h4>
                     <div class="form-group">
                         <label class="control-label">姓名</label>
@@ -105,7 +171,8 @@
                         <label class="control-label">身份证号</label>
                         <input name="cardid" class="form-control" placeholder="请输入身份证号" th:value="${userinfo.cardid}">
                     </div>
-                    <div class="form-group">
+                    <!--未来得及删掉-->
+                    <div class="form-group d-none">
                         <label class="control-label">头像</label>
                         <input name="avatar" class="form-control" th:value="${userinfo.avatar}">
                     </div>

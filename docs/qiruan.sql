@@ -11,11 +11,33 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 06/08/2019 20:08:25
+ Date: 23/08/2019 22:23:22
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for file
+-- ----------------------------
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自动编号',
+  `filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文件名',
+  `type` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文件后缀名',
+  PRIMARY KEY (`id`, `filename`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用来存储文件' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for filerel
+-- ----------------------------
+DROP TABLE IF EXISTS `filerel`;
+CREATE TABLE `filerel`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自动编号',
+  `fid` bigint(20) NULL DEFAULT NULL COMMENT '与文件id对应',
+  `itemname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '与文件对应的项目的名字',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '存储文件与项目（如页面）之间的关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for job
@@ -35,7 +57,7 @@ CREATE TABLE `job`  (
   `detail` varchar(2047) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '具体描述',
   `check` int(11) NULL DEFAULT NULL COMMENT '是否已经审核',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for jobseek
@@ -60,7 +82,7 @@ CREATE TABLE `jobseek`  (
   `introduce` varchar(2047) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '个人介绍',
   `check` int(11) NULL DEFAULT NULL COMMENT '是否已经审核（1审核2未审核）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for labor
@@ -80,27 +102,28 @@ CREATE TABLE `labor`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `letter`;
 CREATE TABLE `letter`  (
-  `id` bigint(20) NOT NULL COMMENT '站内信编号',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '站内信编号',
   `time` datetime(0) NOT NULL COMMENT '留言时间',
   `senduid` int(11) NOT NULL COMMENT '发送者编号',
   `recieveuid` int(11) NOT NULL COMMENT '接受者编号',
   `content` varchar(2047) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '站内信内容',
   `state` int(11) NULL DEFAULT NULL COMMENT '是否已读（1已读2未读）',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标题',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for message
 -- ----------------------------
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message`  (
-  `id` bigint(20) NOT NULL COMMENT '留言编号',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '留言编号',
   `time` datetime(0) NOT NULL COMMENT '留言时间',
   `belong` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '留言从属',
   `uid` int(11) NOT NULL COMMENT '留言用户编号',
   `content` varchar(2047) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '留言内容',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for persistent_logins
@@ -145,6 +168,6 @@ CREATE TABLE `userinfo`  (
   PRIMARY KEY (`id`, `uid`) USING BTREE,
   UNIQUE INDEX `id`(`id`) USING BTREE,
   UNIQUE INDEX `uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

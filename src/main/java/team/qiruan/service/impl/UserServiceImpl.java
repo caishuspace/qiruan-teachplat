@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByName(String name) {
-        List<User> res= jdbcTemplate.query("select * from user where name=?",new Object[]{name},new BeanPropertyRowMapper<User>(User.class));
+        List<User> res= jdbcTemplate.query("select * from user where name=?",new Object[]{name},new BeanPropertyRowMapper<>(User.class));
         if(res.isEmpty()){
             return null;
         }
