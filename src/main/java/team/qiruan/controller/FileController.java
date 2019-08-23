@@ -49,16 +49,30 @@ public class FileController {
     private String upPath;
     
 
+    /**
+     * 文件上传的demo页
+     * @return
+     */
     @GetMapping("/up")
     String up() {
         return "file/up";
     }
 
+    /**
+     * 文件上传及图片压缩存储
+     * @param req
+     * @param file
+     * @param mode 1 图片压缩，保存比例 2 图片压缩，强制
+     * @param x
+     * @param y
+     * @return
+     * @throws IOException
+     */
     @PostMapping(value = "/up")
     @ResponseBody
     public Result upHandle(HttpServletRequest req, @RequestParam("file") MultipartFile file,
             @RequestParam(required = false) Integer mode, @RequestParam(required = false) Integer x,
-            @RequestParam(required = false) Integer y, Model m) throws IOException {
+            @RequestParam(required = false) Integer y) throws IOException {
         Random ran = new Random();
         String fileName = ConversionUtil.encode(System.currentTimeMillis(), 11)
                 + ConversionUtil.encode(Math.abs(ran.nextInt()), 6) + "."
@@ -95,6 +109,14 @@ public class FileController {
         return new Result(0, "图片上传成功！", "/file/down/" + fileName);
     }
 
+    /**
+     * 在网上找的文件下载的类，支持断点续传
+     * @param f_name
+     * @param request
+     * @param response
+     * @param range
+     * @throws UnsupportedEncodingException
+     */
     @RequestMapping(value = "/down/{name}")
     public void downloadFile(@PathVariable(value = "name", required = true) String f_name, HttpServletRequest request,
             HttpServletResponse response, @RequestHeader(required = false) String range)

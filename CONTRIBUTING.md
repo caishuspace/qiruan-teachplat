@@ -4,6 +4,7 @@
 
 ## 文档
 - [需求规约](docs/demand.md)
+- [系统安全方面问题](docs/security.md)
 
 ## 需要用到的工具
 ### git
@@ -35,7 +36,6 @@ MySQL数据库，略。
 |jquery|js库，简化js写法，解决兼容性问题|
 |*spring boot发送邮件*|联系会员手段|
 |*bootstrap*|css模板|
-|*拦截器/过滤器*|权限控制|
 |*spring security*|权限控制|
 
 ## 学习参考
@@ -76,3 +76,11 @@ MySQL数据库，略。
 |图片|config/img|
 |样式表|config/css|
 |模板文件|templates|
+
+## Lombok
+项目使用Lombok，使代码更简洁。参考[https://ntutn.top/show/97.html](https://ntutn.top/show/97.html) 。
+
+## 日志
+不做强制要求，使用slf4j，在类前加上`@Slf4j`并将包导入，就可以直接用了。
+
+如`log.info("Hello,{}.",user)`。

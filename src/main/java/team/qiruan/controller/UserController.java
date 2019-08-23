@@ -72,6 +72,12 @@ public class UserController {
         return new Result(3,"修改失败，发生未知错误。");
     }
 
+    /**
+     * 修改头像
+     * @param username
+     * @param avatar
+     * @return
+     */
     @PostMapping("/avatar")
     @ResponseBody
     Result updateAvatar(@PathVariable String username,@RequestParam String avatar){
