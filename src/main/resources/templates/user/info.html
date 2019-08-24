@@ -89,7 +89,7 @@
                                 $("#img_avatar").attr('src', ret.content);
                                 $.post(
                                     "/user/"
-                                    +/*[[${username}]]*/"admin"
+                                    +/*[[${#authentication.name}]]*/"admin"
                                     + "/avatar",{
                                         avatar:ret.content
                                     }
@@ -118,7 +118,7 @@
         <div class="row">
             <div class="col-md-3 mb-3">
                 <div class="card">
-                    <h4 class="card-header" th:text="${username+'的个人中心'}">Card header</h4>
+                    <h4 class="card-header" th:text="${#authentication.name+'的个人中心'}">Card header</h4>
                     <div class="card-body">
                         <img id="img_avatar" style="height: 128px; width: 128px;; display: block;"
                             th:src="@{/file/down/{avatar}(avatar=${userinfo.avatar})}" alt="Card image"></div>
@@ -130,17 +130,21 @@
                     </form>
                 </div>
                 <div class="bs-component mt-3">
-                    <div class="list-group">
+                    <div class="list-group text-center">
                         <a class="list-group-item list-group-item-action active" href="javascript:;">基本资料</a>
                         <a class="list-group-item list-group-item-action" href="#">安全中心</a>
-                        <a class="list-group-item list-group-item-action disabled" href="/letter/mailbox">站内信箱</a>
+                        <a class="list-group-item list-group-item-action" href="/letter/mailbox">站内信箱</a>
                     </div>
+                    <button id="btn-logout" class="btn btn-danger w-100 mt-2">退出登录</button>
+                    <form id="form-logout" method="POST" th:action="@{/auth/logout}">
+                        <input type="submit" style="display:none;">
+                    </form>
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="tile">
                     <div class="tile-body">
-                        <form id="form-info" method="POST" th:action="@{{username}/update(username=${username})}">
+                        <form id="form-info" method="POST" th:action="@{{username}/update(username=${#authentication.name})}">
                     <h4 class="line-head">Information</h4>
                     <div class="form-group">
                         <label class="control-label">姓名</label>
@@ -185,10 +189,7 @@
             </div>
             <div class="tile-footer">
                 <button id="btn-submit" class="btn btn-primary">提交修改</button>
-                <button id="btn-logout" class="btn btn-danger ml-2">退出登录</button>
-                <form id="form-logout" method="POST" th:action="@{/auth/logout}">
-                    <input type="submit" style="display:none;">
-                </form>
+                <!-- <button id="btn-logout" class="btn btn-danger ml-2">退出登录</button> -->
             </div>
         </div>
     </div>

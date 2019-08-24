@@ -42,21 +42,49 @@
                 <p>向其他用户发送站内信</p>
             </div>
         </div>
-
-        <form th:action="@{/letter/send}" method="POST">
-            <div class="form-group">
-                <label class="control-label">收件人用户名：</label>
-                <input class="form-control" type="text" placeholder="输入收件人的昵称" th:value="${to!=null?to:''}" name="to">
+        <div class="row">
+            <div class="col-md-3">
+                <a class="mb-2 btn btn-primary btn-block" href="/letter/send">写信</a>
+                <div class="tile p-0">
+                    <h4 class="tile-title folder-head">Folders</h4>
+                    <div class="tile-body">
+                        <ul class="nav nav-pills flex-column mail-nav">
+                            <li class="nav-item"><a class="nav-link" href="/letter/mailbox?box=unread"><i
+                                        class="fa fa-envelope-o fa-fw"></i>
+                                    未读信件<span class="badge badge-pill badge-primary float-right"
+                                        th:remove="all">12</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="/letter/mailbox?box=all"><i
+                                        class="fa fa-inbox fa-fw"></i>
+                                    所有信件</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/letter/mailbox?box=send"><i
+                                        class="fa fa-paper-plane-o fa-fw"></i>
+                                    已发送</a></li>
+                        </ul>
+                    </div>
+                    <a class="btn btn-outline-primary mt-3 w-100"
+                        th:href="@{/user/{username}(username=${#authentication.name})}">返回用户中心</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label class="control-label">标题：</label>
-                <input class="form-control" type="text" placeholder="输入信件标题" name="title">
+            <div class="col-md-9">
+                <div class="tile">
+                    <form th:action="@{/letter/send}" method="POST">
+                        <div class="form-group">
+                            <label class="control-label">收件人用户名：</label>
+                            <input class="form-control" type="text" placeholder="输入收件人的昵称" th:value="${to!=null?to:''}"
+                                name="to">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">标题：</label>
+                            <input class="form-control" type="text" placeholder="输入信件标题" name="title">
+                        </div>
+                        <textarea placeholder="站内信内容" id="text-content" name="content"
+                            style="display: none;"></textarea>
+                        <div id="div-content"></div>
+                        <input class="btn btn-primary mt-3 mb-3" type="submit">
+                    </form>
+                </div>
             </div>
-            <textarea placeholder="站内信内容" id="text-content" name="content" style="display: none;"></textarea>
-            <div id="div-content"></div>
-            <input class="btn btn-primary mt-3 mb-3" type="submit">
-        </form>
-
+        </div>
     </main>
 
 

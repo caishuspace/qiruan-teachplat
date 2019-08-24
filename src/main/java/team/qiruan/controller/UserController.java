@@ -50,7 +50,6 @@ public class UserController {
         if(userInfo==null){
             userInfo=new UserInfo();
         }
-        model.addAttribute("username", username);
         model.addAttribute("userinfo", userInfo);
         return "user/info";
     }

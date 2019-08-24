@@ -30,8 +30,13 @@
                         alert("注册失败，请检查输入！");
                     },
                     complete: function () {
+                        ;
                     },
                     success: function (data) {
+                        if(data.code==0){
+                            location.href="/auth/page-login";
+                            return;
+                        }
                         alert(data.message);
                     }
                 });
