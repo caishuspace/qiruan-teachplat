@@ -18,4 +18,12 @@ public interface UserService {
      * @return
      */
     Boolean regist(String name,String password,Integer privilege);
+
+    /**
+     * 修改密码
+     * @param username
+     * @param encodedNewPassWord 加密后的新密码
+     * @return
+     */
+    Boolean changePWD(String username,String encodedNewPassWord);
 }

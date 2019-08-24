@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/wangEditor.min.js"></script>
+    <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
+    <script th:replace="common/usercenter/avatar_script"></script>
+    <script>
+        $(document).ready(function(){
+            $("#menu_security").addClass("active");
+        });
+    </script>
+    <title>安全中心</title>
+</head>
+
+<body>
+    <header th:replace="common/model::header">头部</header>
+
+    <!--退出登录只接受post请求，并且要带csrf的roken-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mb-3" th:include="common/usercenter/menu">左侧菜单</div>
+            <div class="col-md-9">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="accordion" id="accordionMain">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            修改密码
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                    data-parent="#accordionMain">
+                                    <div class="card-body">
+                                        <h3>修改密码</h3>
+                                        <form th:action="@{/user/{username}/changePWD(username=${#authentication.name})}" method="post">
+                                            <div class="form-group">
+                                                <label class="control-label">请输入您原来的密码</label>
+                                                <input type="password" class="form-control" placeholder="请输入密码" name="oldPassword">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">请输入新密码</label>
+                                                <input type="password" class="form-control" placeholder="请输入密码" name="newPassWord">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">请再次输入新密码</label>
+                                                <input type="password" class="form-control" placeholder="请输入密码" name="newPassWord_2">
+                                            </div>
+                                            <input class="btn btn-primary" type="submit" value="修改">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo">
+                                            Collapsible Group Item #2
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                    data-parent="#accordionMain">
+                                    <div class="card-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
+                                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+                                        Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+                                        you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapseThree" aria-expanded="false"
+                                            aria-controls="collapseThree">
+                                            Collapsible Group Item #3
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                    data-parent="#accordionMain">
+                                    <div class="card-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
+                                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+                                        Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+                                        you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="common/model::footer">页脚</footer>
+
+        <!-- Essential javascripts for application to work-->
+        <script src="/js/main.js"></script>
+        <!-- The javascript plugin to display page loading on top-->
+        <script src="/js/plugins/pace.min.js"></script>
+        <!-- Page specific javascripts-->
+        <script type="text/javascript" src="/js/plugins/bootstrap-datepicker.min.js"></script>
+</body>
+
+</html>

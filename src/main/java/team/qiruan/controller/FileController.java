@@ -2,6 +2,7 @@ package team.qiruan.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
@@ -20,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -127,6 +127,7 @@ public class FileController {
         Matcher matcher = pattern.matcher(f_name);
 
         if (matcher.matches()) {
+            log.warn("用户请求文件名有问题，为：{}", f_name);
             return;
         }
         // 文件目录
@@ -221,11 +222,13 @@ public class FileController {
             outputStream.flush();
             response.flushBuffer();
             randomAccessFile.close();
-            System.out.println("下载完毕：" + startByte + "-" + endByte + "：" + transmitted);
+            log.debug("下载完毕：{}-{}：{}", startByte,endByte,transmitted);
 
         } catch (ClientAbortException e) {
-            System.out.println("用户停止下载：" + startByte + "-" + endByte + "：" + transmitted);
+            log.debug("用户停止下载：{}-{}：{}", startByte,endByte,transmitted);
             // 捕获此异常表示拥护停止下载
+        } catch(FileNotFoundException e){
+            log.warn("用户尝试下载不存在的文件{}", f_name);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

@@ -6,16 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>文件上传测试页面</title>
     <script src="/webjars/jquery/jquery.min.js"></script>
+    <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
     <script th:inline="javascript">
         $(document).ready(function () {
-            jQuery.ajaxSetup({
-                "beforeSend": function (request) {
-                    request.setRequestHeader(
-                            /*[[${_csrf.headerName}]]*/"${_csrf.headerName}",
-                            /*[[${_csrf.token}]]*/"${_csrf.token}"
-                    );
-                }
-            });
             $("#button2").click(function () {
                 $("#file2").click();
                 $("#file2").change(function () {

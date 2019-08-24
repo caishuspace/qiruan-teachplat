@@ -9,6 +9,7 @@
 - [数据库结构](docs/qiruan.sql)
 - [状态码对照表](docs/statuscode.md)
 - [文件上传/下载](docs/upload.md)
+- [用户服务条款](docs/tex/WURSA.tex)
 
 ## 功能模块
 ![功能模块](docs/diagrams/out/功能模块.png)

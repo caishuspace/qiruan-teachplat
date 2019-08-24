@@ -42,21 +42,28 @@
                 <p>向其他用户发送站内信</p>
             </div>
         </div>
-
-        <form th:action="@{/letter/send}" method="POST">
-            <div class="form-group">
-                <label class="control-label">收件人用户名：</label>
-                <input class="form-control" type="text" placeholder="输入收件人的昵称" th:value="${to!=null?to:''}" name="to">
+        <div class="row">
+            <div class="col-md-3" th:include="common/usercenter/lettermenu">左侧菜单</div>
+            <div class="col-md-9">
+                <div class="tile">
+                    <form th:action="@{/letter/send}" method="POST">
+                        <div class="form-group">
+                            <label class="control-label">收件人用户名：</label>
+                            <input class="form-control" type="text" placeholder="输入收件人的昵称" th:value="${to!=null?to:''}"
+                                name="to">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">标题：</label>
+                            <input class="form-control" type="text" placeholder="输入信件标题" name="title">
+                        </div>
+                        <textarea placeholder="站内信内容" id="text-content" name="content"
+                            style="display: none;"></textarea>
+                        <div id="div-content"></div>
+                        <input class="btn btn-primary mt-3 mb-3" type="submit">
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label class="control-label">标题：</label>
-                <input class="form-control" type="text" placeholder="输入信件标题" name="title">
-            </div>
-            <textarea placeholder="站内信内容" id="text-content" name="content" style="display: none;"></textarea>
-            <div id="div-content"></div>
-            <input class="btn btn-primary mt-3 mb-3" type="submit">
-        </form>
-
+        </div>
     </main>
 
 

@@ -14,17 +14,11 @@
     <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/wangEditor.min.js"></script>
+    <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
+    <script th:replace="common/usercenter/avatar_script"></script>
 
     <script th:inline="javascript">
         $(document).ready(function () {
-            jQuery.ajaxSetup({
-                "beforeSend": function (request) {
-                    request.setRequestHeader(
-                    /*[[${_csrf.headerName}]]*/"${_csrf.headerName}",
-                    /*[[${_csrf.token}]]*/"${_csrf.token}"
-                    );
-                }
-            });
             $('#birthday').datepicker({
                 format: "dd/mm/yyyy",
                 autoclose: true
@@ -36,17 +30,7 @@
                 // 监控变化，同步更新到 textarea
                 $("#text-introduce").val(html);
             }
-            editor.create()
-            $("#btn-logout").click(function () {
-                //退出登录要用post方法，用form提交是为了省事
-                //虽然后来找到了更好的方法，但我懒得改
-                //“又不是不能用”
-                //^_^
-                if (!confirm("是否退出登录？")) {
-                    return;
-                }
-                $("#form-logout").submit();
-            });
+            editor.create();
             $("#btn-submit").click(function () {
                 var form = $("#form-info");
                 $.ajax({
@@ -68,42 +52,7 @@
                     }
                 });
             });
-            $("#a_editavatar").click(function () {
-                $("#file_avatar").click();
-                $("#file_avatar").change(function () {
-                    var data = new FormData();
-                    var files = $('#file_avatar').prop('files');
-                    data.append('file', files[0]);
-                    data.append('x', 128);
-                    data.append('y', 128);
-                    data.append('mode', 2);
-                    $.ajax({
-                        type: 'POST',
-                        url: "/file/up",
-                        data: data,
-                        cache: false,
-                        processData: false,
-                        contentType: false,
-                        success: function (ret) {
-                            if (ret.code == 0) {
-                                $("#img_avatar").attr('src', ret.content);
-                                $.post(
-                                    "/user/"
-                                    +/*[[${username}]]*/"admin"
-                                    + "/avatar",{
-                                        avatar:ret.content
-                                    }
-                                );
-                            } else {
-                                alert(ret.msg);
-                            }
-                        }
-                    }).fail(function () {
-                        alert("文件上传失败，请检查网络！");
-                    });                
-                    $("#file_avatar").replaceWith($("#file_avatar").prop('outerHTML'));
-                });
-            });
+            $("#menu_basic").addClass("active");
         });
     </script>
 
@@ -116,31 +65,11 @@
     <!--退出登录只接受post请求，并且要带csrf的roken-->
     <div class="container">
         <div class="row">
-            <div class="col-md-3 mb-3">
-                <div class="card">
-                    <h4 class="card-header" th:text="${username+'的个人中心'}">Card header</h4>
-                    <div class="card-body">
-                        <img id="img_avatar" style="height: 128px; width: 128px;; display: block;"
-                            th:src="@{/file/down/{avatar}(avatar=${userinfo.avatar})}" alt="Card image"></div>
-                    <div class="card-body">
-                        <a id="a_editavatar" class="card-link" href="javascript:;">修改头像</a>
-                    </div>
-                    <form enctype="multipart/form-data">
-                        <input type="file" id="file_avatar" style="display:none;">
-                    </form>
-                </div>
-                <div class="bs-component mt-3">
-                    <div class="list-group">
-                        <a class="list-group-item list-group-item-action active" href="javascript:;">基本资料</a>
-                        <a class="list-group-item list-group-item-action" href="#">安全中心</a>
-                        <a class="list-group-item list-group-item-action disabled" href="/letter/mailbox">站内信箱</a>
-                    </div>
-                </div>
-            </div>
+            <div class="col-md-3 mb-3" th:include="common/usercenter/menu">左侧菜单</div>
             <div class="col-md-9">
                 <div class="tile">
                     <div class="tile-body">
-                        <form id="form-info" method="POST" th:action="@{{username}/update(username=${username})}">
+                        <form id="form-info" method="POST" th:action="@{{username}/update(username=${#authentication.name})}">
                     <h4 class="line-head">Information</h4>
                     <div class="form-group">
                         <label class="control-label">姓名</label>
@@ -185,10 +114,7 @@
             </div>
             <div class="tile-footer">
                 <button id="btn-submit" class="btn btn-primary">提交修改</button>
-                <button id="btn-logout" class="btn btn-danger ml-2">退出登录</button>
-                <form id="form-logout" method="POST" th:action="@{/auth/logout}">
-                    <input type="submit" style="display:none;">
-                </form>
+                <!-- <button id="btn-logout" class="btn btn-danger ml-2">退出登录</button> -->
             </div>
         </div>
     </div>

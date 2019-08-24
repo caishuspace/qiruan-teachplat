@@ -29,4 +29,9 @@ public class UserServiceImpl implements UserService {
         return jdbcTemplate.update("insert into user(name,password,privilege) values(?,?,?)", name,password,privilege)>0;
     }
 
+    @Override
+    public Boolean changePWD(String username, String encodedNewPassWord) {
+        return jdbcTemplate.update("UPDATE user SET password=? WHERE name=?", encodedNewPassWord,username)>0;
+    }
+
 }

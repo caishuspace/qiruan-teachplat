@@ -27,7 +27,7 @@ public class LetterController {
     private LetterService letterService;
 
     @GetMapping("/send")
-    String send(@RequestParam(required = false) String to, Model model) {
+    String send(Principal principal,@RequestParam(required = false) String to, Model model) {
         model.addAttribute("to", to);
         return "letter/send";
     }

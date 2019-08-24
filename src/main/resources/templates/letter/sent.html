@@ -21,12 +21,26 @@
 
     <!--显示站内信的发送结果的页面，需要改-->
     <main class="container">
-        <div class="bs-component">
-            <div class="jumbotron" th:text="${text}">
-                <h1 class="display-3">Jumbotron</h1>
-                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-                    featured content or information.</p>
-                <p><a class="btn btn-primary btn-lg" href="#">Learn more</a></p>
+        <div class="row">
+            <div>
+                <h1><i class="fa fa-pencil-square-o"></i> Sent</h1>
+                <p>站内信发送结果</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3" th:include="common/usercenter/lettermenu">左侧菜单</div>
+            <div class="col-md-9">
+                <div class="tile">
+                    <div class="bs-component">
+                        <div class="jumbotron" th:text="${text}">
+                            <h1 class="display-3">Jumbotron</h1>
+                            <p>This is a simple hero unit, a simple jumbotron-style component for calling extra
+                                attention to
+                                featured content or information.</p>
+                            <p><a class="btn btn-primary btn-lg" href="#">Learn more</a></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
