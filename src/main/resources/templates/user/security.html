@@ -15,31 +15,8 @@
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/wangEditor.min.js"></script>
     <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
-
     <script th:inline="javascript">
         $(document).ready(function () {
-            $('#birthday').datepicker({
-                format: "dd/mm/yyyy",
-                autoclose: true
-            });
-            var E = window.wangEditor
-            var editor = new E('#introduce')
-            editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
-            editor.customConfig.onchange = function (html) {
-                // 监控变化，同步更新到 textarea
-                $("#text-introduce").val(html);
-            }
-            editor.create()
-            $("#btn-logout").click(function () {
-                //退出登录要用post方法，用form提交是为了省事
-                //虽然后来找到了更好的方法，但我懒得改
-                //“又不是不能用”
-                //^_^
-                if (!confirm("是否退出登录？")) {
-                    return;
-                }
-                $("#form-logout").submit();
-            });
             $("#btn-submit").click(function () {
                 var form = $("#form-info");
                 $.ajax({
@@ -83,8 +60,8 @@
                                 $.post(
                                     "/user/"
                                     +/*[[${#authentication.name}]]*/"admin"
-                                    + "/avatar",{
-                                        avatar:ret.content
+                                    + "/avatar", {
+                                        avatar: ret.content
                                     }
                                 );
                             } else {
@@ -93,14 +70,14 @@
                         }
                     }).fail(function () {
                         alert("文件上传失败，请检查网络！");
-                    });                
+                    });
                     $("#file_avatar").replaceWith($("#file_avatar").prop('outerHTML'));
                 });
             });
         });
     </script>
 
-    <title>用户信息 - 家教系统</title>
+    <title>安全中心</title>
 </head>
 
 <body>
@@ -137,53 +114,13 @@
             <div class="col-md-9">
                 <div class="tile">
                     <div class="tile-body">
-                        <form id="form-info" method="POST" th:action="@{{username}/update(username=${#authentication.name})}">
-                    <h4 class="line-head">Information</h4>
-                    <div class="form-group">
-                        <label class="control-label">姓名</label>
-                        <input name="name" class="form-control" placeholder="请输入姓名" th:value="${userinfo.name}">
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">性别</label>
-                        <div class="form-check animated-radio-button">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="sex" value="男" th:checked="${userinfo.sex == '男'}"><span
-                                    class="label-text">男</span>
-                            </label>
-                        </div>
-                        <div class="form-check animated-radio-button">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="sex" value="女" th:checked="${userinfo.sex == '女'}"><span
-                                    class="label-text">女</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">出生日期</label>
-                        <!--vali-Admin的日期选择控件，生日应只能选择今天以前的日期-->
-                        <input id="birthday" name="birthday" type="text" class="form-control" data-date-end-date="0d"
-                            placeholder="点击选择出生日期" th:value="${#dates.format(userinfo.birthday, 'MM/dd/yyyy')}">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">身份证号</label>
-                        <input name="cardid" class="form-control" placeholder="请输入身份证号" th:value="${userinfo.cardid}">
-                    </div>
-                    <!--未来得及删掉-->
-                    <div class="form-group d-none">
-                        <label class="control-label">头像</label>
-                        <input name="avatar" class="form-control" th:value="${userinfo.avatar}">
-                    </div>
-                    <textarea name="introduce" id="text-introduce" style="display: none;"></textarea>
-                    <div class="form-group">
-                        <label class="control-label">个人说明</label>
-                        <div id="introduce" th:utext="${userinfo.introduce}"></div>
-                    </div>
-                </form>
+                    <div class="tile-footer">
+                    <button id="btn-submit" class="btn btn-primary">提交修改</button>
+                    <!-- <button id="btn-logout" class="btn btn-danger ml-2">退出登录</button> -->
+                </div>
             </div>
-            <div class="tile-footer">
-                <button id="btn-submit" class="btn btn-primary">提交修改</button>
-                <!-- <button id="btn-logout" class="btn btn-danger ml-2">退出登录</button> -->
-            </div>
+            
         </div>
     </div>
 

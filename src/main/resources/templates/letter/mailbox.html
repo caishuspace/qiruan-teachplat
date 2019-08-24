@@ -16,18 +16,9 @@
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-
+    <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
     <script th:inline="javascript">
         $(document).ready(function () {
-            //添加csrf的header
-            jQuery.ajaxSetup({
-                "beforeSend": function (request) {
-                    request.setRequestHeader(
-                        /*[[${_csrf.headerName}]]*/"${_csrf.headerName}",
-                        /*[[${_csrf.token}]]*/"${_csrf.token}"
-                    );
-                }
-            });
             //点击总复选框其他复选框联动
             $(".chk-father").change(function () {
                 $(".chk-child").prop('checked', $(this).prop('checked'));
@@ -87,28 +78,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <a class="mb-2 btn btn-primary btn-block" href="/letter/send">写信</a>
-                <div class="tile p-0">
-                    <h4 class="tile-title folder-head">Folders</h4>
-                    <div class="tile-body">
-                        <ul class="nav nav-pills flex-column mail-nav">
-                            <li class="nav-item"><a class="nav-link" href="/letter/mailbox?box=unread"><i
-                                        class="fa fa-envelope-o fa-fw"></i>
-                                    未读信件<span class="badge badge-pill badge-primary float-right"
-                                        th:remove="all">12</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="/letter/mailbox?box=all"><i
-                                        class="fa fa-inbox fa-fw"></i>
-                                    所有信件</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/letter/mailbox?box=send"><i
-                                        class="fa fa-paper-plane-o fa-fw"></i>
-                                    已发送</a></li>
-                        </ul>
-                    </div>
-                    <a class="btn btn-outline-primary mt-3 w-100"
-                        th:href="@{/user/{username}(username=${#authentication.name})}">返回用户中心</a>
-                </div>
-            </div>
+            <div class="col-md-3" th:include="common/usercenter/lettermenu">左侧菜单</div>
             <div class="col-md-9">
                 <div class="tile">
                     <div class="mailbox-controls">

@@ -80,6 +80,12 @@
 </script>
 ```
 
+为了偷懒我无所不用其极，结合thymeleaf引入的方法，我将上面的写在一个单独文件中。
+
+```html
+    <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
+```
+
 *参考*
 
 - [使用SpringSecurity处理CSRF攻击](https://segmentfault.com/a/1190000018402597)

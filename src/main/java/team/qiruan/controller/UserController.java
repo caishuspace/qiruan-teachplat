@@ -88,4 +88,14 @@ public class UserController {
         }
         return new Result(8,"头像保存失败。");
     }
+
+    @GetMapping("/security")
+    String security(@PathVariable String username,Model model){
+        UserInfo userInfo=userInfoService.getUserInfoByName(username);
+        if(userInfo==null){
+            userInfo=new UserInfo();
+        }
+        model.addAttribute("userinfo", userInfo);
+        return "user/security";
+    }
 }

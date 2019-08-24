@@ -21,6 +21,16 @@
             });
         });
     </script>
+    <script id="common_jquery_csrf" th:inline="javascript">
+        jQuery.ajaxSetup({
+            "beforeSend": function (request) {
+                request.setRequestHeader(
+                /*[[${_csrf.headerName}]]*/"${_csrf.headerName}",
+                /*[[${_csrf.token}]]*/"${_csrf.token}"
+                );
+            }
+        });
+    </script>
 </head>
 
 <!--一份模板，放置头部、页脚等常用组件，可用th:replace等方法引入-->
@@ -31,21 +41,21 @@
             style="height: 40px;line-height:39px;">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-2 top-bar-1">
+                    <div class="col-md-3 col-lg-2 top-bar-1">
                         <a href="javascript:;" class="text-muted">
                             <i class="fa fa-mobile" aria-hidden="true"></i>
                             <span>关注微信号</span>
                             <img src="/img/erw.png" alt="二维码" style="width: 120px;">
                         </a>
                     </div>
-                    <div class="col-md-5 border-left">
+                    <div class="col-lg-5 border-left d-none d-lg-block">
                         <i class="fa fa-phone" aria-hidden="true"></i> 188-8888-8888（服务时间：9:00-21:00）
                     </div>
-                    <div class="col-md-2 border-left">
+                    <div class="col-md-3 col-lg-2 border-left">
                         <span sec:authorize="isAnonymous()">大学生兼职</span>
                         <span sec:authorize="!isAnonymous()" sec:authentication="principal.username"></span>
                     </div>
-                    <div class="col-md-3 border-left">
+                    <div class="col-md-6 col-lg-3 border-left">
                         <div sec:authorize="isAnonymous()">
                             <a href="/auth/page-reg" class="btn btn-success btn-sm">免费注册</a>
                             <a href="/auth/page-login" class="ml-2 text-muted">立即登录</a>
