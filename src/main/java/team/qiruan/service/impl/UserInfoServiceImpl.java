@@ -37,6 +37,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public Boolean updateAvatar(String username, String avatar) {
+        jdbcTemplate.update("insert ignore into userinfo(uid) values((select id from user where name=?));", username);
         return jdbcTemplate.update("UPDATE userinfo SET avatar=? WHERE uid=(SELECT id FROM user WHERE name=?)", avatar,username)>0;
     }
 

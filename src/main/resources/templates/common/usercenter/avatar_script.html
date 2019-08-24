@@ -1,0 +1,40 @@
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $("#a_editavatar").click(function () {
+            $("#file_avatar").click();
+            $("#file_avatar").change(function () {
+                var data = new FormData();
+                var files = $('#file_avatar').prop('files');
+                data.append('file', files[0]);
+                data.append('x', 128);
+                data.append('y', 128);
+                data.append('mode', 2);
+                $.ajax({
+                    type: 'POST',
+                    url: "/file/up",
+                    data: data,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (ret) {
+                        if (ret.code == 0) {
+                            $("#img_avatar").attr('src', ret.content);
+                            $.post(
+                                "/user/"
+                                +/*[[${#authentication.name}]]*/"admin"
+                                + "/avatar", {
+                                    avatar: ret.content
+                                }
+                            );
+                        } else {
+                            alert(ret.msg);
+                        }
+                    }
+                }).fail(function () {
+                    alert("文件上传失败，请检查网络！");
+                });
+                $("#file_avatar").replaceWith($("#file_avatar").prop('outerHTML'));
+            });
+        });
+    });
+</script>

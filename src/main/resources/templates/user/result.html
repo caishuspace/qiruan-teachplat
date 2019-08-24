@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/wangEditor.min.js"></script>
+    <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
+    <script th:replace="common/usercenter/avatar_script"></script>
+
+    <title>安全中心</title>
+</head>
+
+<body>
+    <header th:replace="common/model::header">头部</header>
+
+    <!--退出登录只接受post请求，并且要带csrf的roken-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mb-3" th:include="common/usercenter/menu">左侧菜单</div>
+            <div class="col-md-9">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="bs-component">
+                            <div class="jumbotron" th:text="${text}">
+                                <h1 class="display-3">Jumbotron</h1>
+                                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra
+                                    attention to
+                                    featured content or information.</p>
+                                <p><a class="btn btn-primary btn-lg" href="#">Learn more</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="common/model::footer">页脚</footer>
+
+    <!-- Essential javascripts for application to work-->
+    <script src="/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="/js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <script type="text/javascript" src="/js/plugins/bootstrap-datepicker.min.js"></script>
+</body>
+
+</html>

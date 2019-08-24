@@ -121,5 +121,5 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>undefined
+    </build>
 </project>

@@ -15,68 +15,12 @@
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/wangEditor.min.js"></script>
     <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
-    <script th:inline="javascript">
-        $(document).ready(function () {
-            $("#btn-submit").click(function () {
-                var form = $("#form-info");
-                $.ajax({
-                    url: form.attr("action"),
-                    type: form.attr("method"),
-                    data: form.serialize(),
-                    dataType: "json",
-                    beforeSend: function (xhr) {
-                    },
-                    error: function () {
-                        alert("提交失败，请检查输入！");
-                    },
-                    complete: function () {
-                        alert("更新成功");
-                        location.reload();
-                    },
-                    success: function (data) {
-                        alert(data.message);
-                    }
-                });
-            });
-            $("#a_editavatar").click(function () {
-                $("#file_avatar").click();
-                $("#file_avatar").change(function () {
-                    var data = new FormData();
-                    var files = $('#file_avatar').prop('files');
-                    data.append('file', files[0]);
-                    data.append('x', 128);
-                    data.append('y', 128);
-                    data.append('mode', 2);
-                    $.ajax({
-                        type: 'POST',
-                        url: "/file/up",
-                        data: data,
-                        cache: false,
-                        processData: false,
-                        contentType: false,
-                        success: function (ret) {
-                            if (ret.code == 0) {
-                                $("#img_avatar").attr('src', ret.content);
-                                $.post(
-                                    "/user/"
-                                    +/*[[${#authentication.name}]]*/"admin"
-                                    + "/avatar", {
-                                        avatar: ret.content
-                                    }
-                                );
-                            } else {
-                                alert(ret.msg);
-                            }
-                        }
-                    }).fail(function () {
-                        alert("文件上传失败，请检查网络！");
-                    });
-                    $("#file_avatar").replaceWith($("#file_avatar").prop('outerHTML'));
-                });
-            });
+    <script th:replace="common/usercenter/avatar_script"></script>
+    <script>
+        $(document).ready(function(){
+            $("#menu_security").addClass("active");
         });
     </script>
-
     <title>安全中心</title>
 </head>
 
@@ -86,52 +30,105 @@
     <!--退出登录只接受post请求，并且要带csrf的roken-->
     <div class="container">
         <div class="row">
-            <div class="col-md-3 mb-3">
-                <div class="card text-center">
-                    <h4 class="card-header" th:text="${#authentication.name+'的个人中心'}">Card header</h4>
-                    <div class="card-body">
-                        <img id="img_avatar" class="img-fluid" 
-                            th:src="@{/file/down/{avatar}(avatar=${userinfo.avatar})}" alt="Card image"></div>
-                    <div class="card-body">
-                        <a id="a_editavatar" class="card-link" href="javascript:;">修改头像</a>
-                    </div>
-                    <form enctype="multipart/form-data">
-                        <input type="file" id="file_avatar" style="display:none;">
-                    </form>
-                </div>
-                <div class="bs-component mt-3">
-                    <div class="list-group text-center">
-                        <a class="list-group-item list-group-item-action active" href="javascript:;">基本资料</a>
-                        <a class="list-group-item list-group-item-action" th:href="@{/user/{username}/security(username=${#authentication.name})}">安全中心</a>
-                        <a class="list-group-item list-group-item-action" href="/letter/mailbox">站内信箱</a>
-                    </div>
-                    <button id="btn-logout" class="btn btn-outline-danger w-100 mt-2">退出登录</button>
-                    <form id="form-logout" method="POST" th:action="@{/auth/logout}">
-                        <input type="submit" style="display:none;">
-                    </form>
-                </div>
-            </div>
+            <div class="col-md-3 mb-3" th:include="common/usercenter/menu">左侧菜单</div>
             <div class="col-md-9">
                 <div class="tile">
                     <div class="tile-body">
+                        <div class="accordion" id="accordionMain">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            修改密码
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                    data-parent="#accordionMain">
+                                    <div class="card-body">
+                                        <h3>修改密码</h3>
+                                        <form th:action="@{/user/{username}/changePWD(username=${#authentication.name})}" method="post">
+                                            <div class="form-group">
+                                                <label class="control-label">请输入您原来的密码</label>
+                                                <input type="password" class="form-control" placeholder="请输入密码" name="oldPassword">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">请输入新密码</label>
+                                                <input type="password" class="form-control" placeholder="请输入密码" name="newPassWord">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">请再次输入新密码</label>
+                                                <input type="password" class="form-control" placeholder="请输入密码" name="newPassWord_2">
+                                            </div>
+                                            <input class="btn btn-primary" type="submit" value="修改">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo">
+                                            Collapsible Group Item #2
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                    data-parent="#accordionMain">
+                                    <div class="card-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
+                                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+                                        Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+                                        you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapseThree" aria-expanded="false"
+                                            aria-controls="collapseThree">
+                                            Collapsible Group Item #3
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                    data-parent="#accordionMain">
+                                    <div class="card-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
+                                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+                                        Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+                                        you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tile-footer">
-                    <button id="btn-submit" class="btn btn-primary">提交修改</button>
-                    <!-- <button id="btn-logout" class="btn btn-danger ml-2">退出登录</button> -->
                 </div>
             </div>
-            
         </div>
-    </div>
 
-    <footer th:replace="common/model::footer">页脚</footer>
+        <footer th:replace="common/model::footer">页脚</footer>
 
-    <!-- Essential javascripts for application to work-->
-    <script src="/js/main.js"></script>
-    <!-- The javascript plugin to display page loading on top-->
-    <script src="/js/plugins/pace.min.js"></script>
-    <!-- Page specific javascripts-->
-    <script type="text/javascript" src="/js/plugins/bootstrap-datepicker.min.js"></script>
+        <!-- Essential javascripts for application to work-->
+        <script src="/js/main.js"></script>
+        <!-- The javascript plugin to display page loading on top-->
+        <script src="/js/plugins/pace.min.js"></script>
+        <!-- Page specific javascripts-->
+        <script type="text/javascript" src="/js/plugins/bootstrap-datepicker.min.js"></script>
 </body>
 
 </html>

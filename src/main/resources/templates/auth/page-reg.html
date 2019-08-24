@@ -18,7 +18,7 @@
     <script>
         $(document).ready(function () {
             $("#btn-submit").click(function () {
-                var form = $("form");
+                var form = $("#regform");
                 $.ajax({
                     url: form.attr("action"),
                     type: form.attr("method"),
