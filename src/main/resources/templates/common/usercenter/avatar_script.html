@@ -20,9 +20,8 @@
                         if (ret.code == 0) {
                             $("#img_avatar").attr('src', ret.content);
                             $.post(
-                                "/user/"
-                                +/*[[${#authentication.name}]]*/"admin"
-                                + "/avatar", {
+                                /*[('"'+@{/user/{username}/avatar(username=${#authentication.name})}+'"')]*/"/user/admin/avatar"
+                                , {
                                     avatar: ret.content
                                 }
                             );

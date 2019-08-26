@@ -1,6 +1,7 @@
 package team.qiruan.controller;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -20,9 +21,12 @@ import team.qiruan.domain.EditUserInfo;
 import team.qiruan.domain.Result;
 import team.qiruan.domain.User;
 import team.qiruan.domain.UserInfo;
+import team.qiruan.service.EMailService;
 import team.qiruan.service.FileService;
+import team.qiruan.service.UserBindService;
 import team.qiruan.service.UserInfoService;
 import team.qiruan.service.UserService;
+import team.qiruan.utils.ConversionUtil;
 import team.qiruan.utils.JsoupUtil;
 
 /**
@@ -43,6 +47,10 @@ public class UserController {
     private UserService userService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserBindService userBindService;
+    @Autowired
+    private EMailService emailService;
 
     /**
      * 展示用户信息
@@ -112,9 +120,19 @@ public class UserController {
             userInfo = new UserInfo();
         }
         model.addAttribute("userinfo", userInfo);
+        model.addAttribute("userbind", userBindService.getUserBindByName(username));
         return "user/security";
     }
 
+    /**
+     * 修改密码
+     * @param username
+     * @param model
+     * @param oldPassword
+     * @param newPassWord
+     * @param newPassWord_2
+     * @return
+     */
     @PostMapping("/changePWD")
     String changePassword(@PathVariable String username, Model model, @RequestParam String oldPassword,
             @RequestParam String newPassWord, @RequestParam String newPassWord_2) {
@@ -137,5 +155,17 @@ public class UserController {
         }
         model.addAttribute("userinfo", userInfo);
         return "user/result";
+    }
+
+    @PostMapping("/bind/email")
+    @ResponseBody
+    Result changeBindEmail(@PathVariable String username,@RequestParam String email){
+        Random ran=new Random();
+        String valicode=ConversionUtil.encode(Math.abs(ran.nextLong()), 11);
+        if(userBindService.addUserBindEmail(username, email,valicode)){
+            emailService.sendEmailValiCode(username, email, valicode);
+            return new Result(0,"绑定邮箱已经修改，请尽快完成验证。");
+        }
+        return new Result(5,"绑定邮箱修改失败，请重试。");
     }
 }
