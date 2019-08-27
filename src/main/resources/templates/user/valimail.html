@@ -1,0 +1,16 @@
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>电子邮箱验证</title>
+</head>
+<body>
+    <p>您好，<span th:text="${username}">用户</span>，您正在使用该电子邮箱绑定自己的家教网账户。</p>
+    <p><a th:href="@{{baseurl}/user/{username}(baseurl=${baseurl},username=${username})}">用户中心</a></p>
+    <p>点击<a th:href="@{{baseurl}/bindvali/email/{valicode}(baseurl=${baseurl},valicode=${vali})}" th:text="@{http://localhost/bindvali/email/{valicode}(valicode=${vali})}">这里</a>继续完成绑定。</p>
+    <p>如非本人操作，请无视本邮件。</p>
+    <hr>
+    <p>本邮件由程序自动发送，请勿直接回复。</p>
+</body>
+</html>

@@ -29,7 +29,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     public Boolean updateUserInfo(String username,EditUserInfo userInfo) {
         //要求uid为userinfo表中的唯一索引
         jdbcTemplate.update("insert ignore into userinfo(uid) values((select id from user where name=?));", username);
-        return jdbcTemplate.update("update userinfo set name=?,sex=?,birthday=STR_TO_DATE(?,'%m/%d/%Y'),cardid=?,avatar=?,introduce=?"
+        return jdbcTemplate.update("update userinfo set name=?,sex=?,birthday=STR_TO_DATE(?,'%d/%m/%Y'),cardid=?,avatar=?,introduce=?"
         +"where uid=(select id from user where name=?);",userInfo.getName(),userInfo.getSex(),userInfo.getBirthday(),
         userInfo.getCardid(),userInfo.getAvatar(),userInfo.getIntroduce(),username
         )>0;

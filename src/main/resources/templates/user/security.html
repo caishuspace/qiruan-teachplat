@@ -13,12 +13,31 @@
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/js/wangEditor.min.js"></script>
+    <script src="/js/plugins/sweetalert.min.js"></script>
     <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
     <script th:replace="common/usercenter/avatar_script"></script>
-    <script>
-        $(document).ready(function(){
+    <script th:inline="javascript">
+        $(document).ready(function () {
             $("#menu_security").addClass("active");
+            $("#btn-email-edit").click(function () {
+                swal({
+                    title: "请输入您的电子邮箱。",
+                    content: {
+                        element: "input",
+                        attributes: {
+                            placeholder: "Type your E-mail address...",
+                            type: "email"
+                        },
+                    }
+                }).then((email) => {
+                    $.post(
+                    /*[('"'+@{/user/{username}/bind/email(username=${#authentication.name})}+'"')]*/"/user/admin/bind/email",{
+                        email:email
+                    },function(data,status){
+                        swal(data.message);
+                    });
+                });
+            });
         });
     </script>
     <title>安全中心</title>
@@ -26,7 +45,6 @@
 
 <body>
     <header th:replace="common/model::header">头部</header>
-
     <!--退出登录只接受post请求，并且要带csrf的roken-->
     <div class="container">
         <div class="row">
@@ -73,21 +91,33 @@
                                         <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                             data-target="#collapseTwo" aria-expanded="false"
                                             aria-controls="collapseTwo">
-                                            Collapsible Group Item #2
+                                            用户绑定
                                         </button>
                                     </h2>
                                 </div>
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                                     data-parent="#accordionMain">
                                     <div class="card-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
-                                        shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
-                                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-                                        Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-                                        you probably haven't heard of them accusamus labore sustainable VHS.
+                                        <h3>用户绑定</h3>
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td><i class="fa fa-mobile" aria-hidden="true"></i> 手机号</td>
+                                                    <td th:text="${userbind.phone}">13313131313</td>
+                                                    <td><button class="btn btn-primary">编辑</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="fa fa-envelope" aria-hidden="true"></i> 电子邮箱</td>
+                                                    <td th:text="${userbind.email}">t@gmail.com</td>
+                                                    <td><button id="btn-email-edit" class="btn btn-primary">编辑</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="fa fa-qq" aria-hidden="true"></i> QQ</td>
+                                                    <td th:text="${userbind.qq}">1</td>
+                                                    <td><button class="btn btn-primary">编辑</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +127,7 @@
                                         <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                             data-target="#collapseThree" aria-expanded="false"
                                             aria-controls="collapseThree">
-                                            Collapsible Group Item #3
+                                            用户信息审核
                                         </button>
                                     </h2>
                                 </div>
