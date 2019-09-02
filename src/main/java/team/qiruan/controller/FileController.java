@@ -93,8 +93,7 @@ public class FileController {
             Thumbnails.of(file.getInputStream()).size(x, y).useOriginalFormat().toFile(destFileName);
         } else if (mode == 2) {
             // 图片强制压缩
-            Thumbnails.of(file.getInputStream()).size(x, y).keepAspectRatio(false).useOriginalFormat()
-                    .toFile(destFileName);
+            Thumbnails.of(file.getInputStream()).size(x, y).keepAspectRatio(false).useOriginalFormat().toFile(destFileName);
         } else {
             // 文件原样保存
             File destFile = new File(destFileName);
