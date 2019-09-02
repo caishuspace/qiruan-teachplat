@@ -75,6 +75,9 @@ public class LetterController {
     @PostMapping("/del")
     @ResponseBody
     Result del(@RequestParam Integer id,Principal principal){
+        if(principal==null){
+            return new Result(5,"删除失败");
+        }
         Boolean flag=letterService.del(principal.getName(), id);
         if(flag){
             return new Result(0,"删除站内信成功。");
