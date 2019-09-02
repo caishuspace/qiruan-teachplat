@@ -1,0 +1,33 @@
+<script th:inline="javascript">
+    $(document).ready(function () {
+        
+            $("#file_vcr").change(function () {
+                var data = new FormData();
+                var files = $('#file_vcr').prop('files');
+                data.append('file', files[0]);
+                data.append('mode', 3);
+                $.ajax({
+                    type: 'POST',
+                    url: "/file/up",
+                    data: data,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (ret) {
+                        if (ret.code == 0) {
+                            
+                            $("#file_vcr").parent(".form-group").append("<input name=\"vcr\"   class=\"form-control\" readonly>");
+                            $("#file_vcr").next("input").val(ret.content);
+                            $("#file_vcr").remove();
+                        } else {
+                            alert(ret.msg);
+                        }
+                    }
+                }).fail(function () {
+                    alert("文件上传失败，请检查网络！");
+                });
+                
+            });
+        });
+
+</script>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>[[${model.year}]]的求职信息</title>
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <header th:replace="common/model::header">头部</header>
+    <main class="container border">
+        <!-- 卡片 -->
+        <div class="card mb-3 border-0">
+            <div class="row no-gutters ">
+                <div class="col-md-3">
+                    <img th:src="@{/file/down/{avatar}(avatar=${model.avatar})}" class="card-img" alt="头像加载失败">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${model.name}"></h5>
+                        <p class="card-text">
+                            <i class="fa fa-mars-stroke" aria-hidden="true" th:if="${model.sex == '男'}"></i>
+                            <i class="fa fa-venus" aria-hidden="true" th:if="${model.sex == '女'}"></i>
+                        </p>
+
+
+                        <p class="card-text">入学年份:[[${model.year}]]</p>
+                        <p class="card-text">专 业:[[${model.major}]]</p>
+
+                        <p class="card-text">
+                            <button type="button" class="btn btn-primary"
+                                th:if="${model.sub1!=null && model.sub1!='' }">[[${model.sub1}]]</button>
+                            <button type="button" class="btn btn-info"
+                                th:if="${model.sub2!=null && model.sub2!='' }">[[${model.sub2}]]</button>
+                            <button type="button" class="btn btn-success"
+                                th:if="${model.sub3!=null && model.sub3!='' }">[[${model.sub3}]]</button>
+
+                        </p>
+                        <p class="card-text"><small class="text-muted">发布时间:[[${model.time}]]</small></p>
+                        <p>
+
+                            <!-- Default dropright button -->
+                            <div class="btn-group dropright">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    联系我
+                                </button>
+                                <div class="dropdown-menu">
+                                    <p class="card-text"><a th:href="@{/letter/send(to=${model.name})}">站内信>></a></p>
+
+                                    <p class="card-text">Tel:[[${model.phone}]]</p>
+                                    <p class="card-text">QQ:[[${model.qq}]]</p>
+                                    <p class="card-text">Mail:[[${model.mail}]]</p>
+
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p align="center">
+            <video th:if="${model.vcr!=null && model.vcr!='' }" th:src="@{/file/down/{vcr}(vcr=${model.vcr})}"
+                width="90%" controls="controls"></video>
+
+        </p>
+
+        <div class="introduce" th:utext="${model.introduce}">
+
+        </div>
+
+
+    </main>
+
+
+
+
+    <footer th:replace="common/model::footer">页脚</footer>
+    <!-- Essential javascripts for application to work-->
+    <script src="/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="/js/plugins/pace.min.js"></script>
+</body>
+
+</html>

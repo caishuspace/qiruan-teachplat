@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/wangEditor.min.js"></script>
+    <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
+    <script th:replace="jobseek/vcr_script"></script>
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+
+            var E = window.wangEditor
+            var editor = new E('#introduce')
+            editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+            editor.customConfig.onchange = function (html) {
+                // 监控变化，同步更新到 textarea
+                $("#text-introduce").val(html);
+            }
+            editor.create();
+            // $("#btn-submit").click(function () {
+            //     var form = $("#form-info");
+            //     // $.post("/jobseek/add",{
+            //     //     s:$("sfsg").val()
+            //     // },function(data,status){
+
+            //     // });
+            //     $.ajax({
+            //         url: form.attr("action"),
+            //         type: form.attr("method"),
+            //         data: form.serialize(),
+            //         dataType: "json",
+            //         beforeSend: function (xhr) {
+            //         },
+            //         error: function () {
+            //             alert("提交失败，请检查输入！");
+            //         },
+            //         complete: function () {
+            //             alert("更新成功");
+            //             // location.reload();
+            //         },
+            //         success: function (data) {
+            //             alert(data.message);
+            //         }
+            //     });
+            // });
+            // $("#menu_basic").addClass("active");
+        });
+    </script>
+
+    <title>求职信息-发布求职</title>
+</head>
+
+<body>
+    <header th:replace="common/model::header">头部</header>
+    <!--退出登录只接受post请求，并且要带csrf的roken-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <form id="form-info" method="POST" th:action="@{/jobseek/add}">
+                            <h4 class="line-head">发布求职</h4>
+                            <div class="form-group">
+                                <label class="control-label">学校</label>
+                                <input name="school" class="form-control" placeholder="请输入学校名称">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">入学年份</label>
+                                <input name="year" class="form-control" placeholder="请输入入学年份">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">专业</label>
+                                <input name="major" class="form-control" placeholder="请输入专业">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">电话</label>
+                                <input name="phone" class="form-control" placeholder="请输入电话">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">qq</label>
+                                <input name="qq" class="form-control" placeholder="请输入qq">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">mail</label>
+                                <input name="mail" class="form-control" placeholder="请输入mail">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">学科1</label>
+                                <input name="sub1" class="form-control" placeholder="请输入学科1">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">学科2</label>
+                                <input name="sub2" class="form-control" placeholder="请输入学科2">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">学科3</label>
+                                <input name="sub3" class="form-control" placeholder="请输入学科3">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">金额</label>
+                                <input name="money" class="form-control" placeholder="请输入金额">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">vcr</label>
+                                <input name="vcr" id="file_vcr" type="file" class="form-control" placeholder="请输入vcr">
+                            </div>
+                            <textarea name="introduce" id="text-introduce" style="display: none;"></textarea>
+                            <div class="form-group">
+                                <label class="control-label">简介</label>
+                                <div id="introduce"></div>
+                            </div>
+
+<div class="tile-footer">
+                        <button id="btn-submit" class="btn btn-primary">提交</button>
+                    </div>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <footer th:replace="common/model::footer">页脚</footer>
+
+            <!-- Essential javascripts for application to work-->
+            <script src="/js/main.js"></script>
+            <!-- The javascript plugin to display page loading on top-->
+            <script src="/js/plugins/pace.min.js"></script>
+            <!-- Page specific javascripts-->
+            <script type="text/javascript" src="/js/plugins/bootstrap-datepicker.min.js"></script>
+</body>
+
+</html>
