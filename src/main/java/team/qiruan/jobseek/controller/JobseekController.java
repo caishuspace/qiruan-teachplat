@@ -80,6 +80,22 @@ public class JobseekController {
         return new Result(0, "success",  jobseekDao.insert(jobseek));
     }
 
+    @GetMapping("/my")
+    String getAllOne(Principal principal, Model model)
+    {
+        if(principal.getName()==null)
+        {
+            return "404";
+        }
+         
+        model.addAttribute("allJobseeks", jobseekDao.getAllOneJobseeks(userService.getUserByName( principal.getName()).getId()));
+        return "jobseek/my";
+    }
 
-
+    @GetMapping("/delete/{id}")
+    @ResponseBody
+    Result deleteOne(@PathVariable Integer id) {
+        
+        return new Result(0, "message", jobseekDao.delete(id));
+    }
 }

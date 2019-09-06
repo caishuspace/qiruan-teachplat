@@ -43,8 +43,8 @@ public class JobseekImpl implements JobseekDao{
     }
 
     @Override
-    public List<Jobseek> getAllJobseeks() {
-        List<Jobseek> res= jdbcTemplate.query("select * from jobseek", new Object[]{}, new BeanPropertyRowMapper<Jobseek>(Jobseek.class));
+    public List<Jobseek> getAllOneJobseeks( int uid ) {
+        List<Jobseek> res= jdbcTemplate.query("select * from jobseek where uid =?", new Object[]{uid}, new BeanPropertyRowMapper<Jobseek>(Jobseek.class));
         if(res.isEmpty()){
             return null;
         }

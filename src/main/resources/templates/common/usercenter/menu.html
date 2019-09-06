@@ -14,6 +14,7 @@
     <div class="bs-component mt-3">
         <div class="list-group text-center">
             <a id="menu_basic" class="list-group-item list-group-item-action" th:href="@{/user/{username}(username=${#authentication.name})}">基本资料</a>
+            <a id="menu_jobseek" class="list-group-item list-group-item-action" th:href="@{/jobseek/my}">我的求职</a>
             <a id="menu_security" class="list-group-item list-group-item-action" th:href="@{/user/{username}/security(username=${#authentication.name})}">安全中心</a>
             <a id="menu_letter" class="list-group-item list-group-item-action" href="/letter/mailbox">站内信箱</a>
         </div>

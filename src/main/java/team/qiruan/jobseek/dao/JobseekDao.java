@@ -8,6 +8,6 @@ public interface JobseekDao {
     int update(Jobseek jobseek);
     Jobseek_more search(int id);
     int delete(int id);
-    List<Jobseek> getAllJobseeks();
+    List<Jobseek> getAllOneJobseeks(int uid);
     List<Jobseek_less> getAllJobseeks_Less();
 }
