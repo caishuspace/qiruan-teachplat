@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>招聘信息</title>
+  <!-- Main CSS-->
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
+  <!-- Font-icon css-->
+  <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <script src="/webjars/jquery/jquery.min.js"></script>
+  <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+  <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <header th:replace="common/model::header">头部</header>
+  <main class="container">
+    <!-- 卡片 -->
+    <div class="row ">
+      <div class="m-4  col-md-5  " th:each="i:${allJobers}">
+        <div class="card  ">
+
+          <div class="row no-gutters ">
+            <div class="col-4">
+              <img th:src="@{/file/down/{avatar}(avatar=${i.avatar})}" class="card-img" alt="头像加载失败">
+            </div>
+            <div class="col-8">
+              <div class="card-body">
+                <h5 class="card-title" th:text="${i.name}"></h5>
+                <i class="fa fa-mars-stroke" aria-hidden="true" th:if="${i.sex == '男'}"></i>
+                <i class="fa fa-venus" aria-hidden="true" th:if="${i.sex == '女'}"></i>
+                <p class="card-text">工资:[[${i.salary}]]</p>
+                <p class="card-text">地址:[[${i.address}]]</p>
+                
+
+                
+                <p class="card-text"><small class="text-muted">发布时间:[[${i.time}]]</small></p>
+                <p><a th:href="@{/job/one/{id}(id=${i.id})} ">更多>></a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+
+
+
+  <footer th:replace="common/model::footer">页脚</footer>
+  <!-- Essential javascripts for application to work-->
+  <script src="/js/main.js"></script>
+  <!-- The javascript plugin to display page loading on top-->
+  <script src="/js/plugins/pace.min.js"></script>
+</body>
+
+</html>

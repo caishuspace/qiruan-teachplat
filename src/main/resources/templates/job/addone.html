@@ -15,7 +15,7 @@
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/wangEditor.min.js"></script>
     <script th:replace="common/model::#common_jquery_csrf">/*jquery ajax的csrf header*/</script>
-    <script th:replace="jobseek/vcr_script"></script>
+
 
     <script th:inline="javascript">
         $(document).ready(function () {
@@ -44,11 +44,12 @@
                     error: function () {
                         alert("提交失败，请检查输入！");
                     },
-                    complete: function () {                        
+                    complete: function () {                      
+                        
                     },
                     success: function (data) {
                         alert(data.message);
-                        window.location.href = "/jobseek/my";
+                        window.location.href = "/job/my" ;
                     }
                 });
             });
@@ -56,7 +57,7 @@
         });
     </script>
 
-    <title>求职信息-发布求职</title>
+    <title>招聘信息-发布招聘</title>
 </head>
 
 <body>
@@ -67,20 +68,9 @@
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
-                        <form id="form-info" method="POST" th:action="@{/jobseek/add}">
-                            <h4 class="line-head">发布求职</h4>
-                            <div class="form-group">
-                                <label class="control-label">学校</label>
-                                <input name="school" class="form-control" placeholder="请输入学校名称">
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">入学年份</label>
-                                <input name="year" class="form-control" placeholder="请输入入学年份">
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">专业</label>
-                                <input name="major" class="form-control" placeholder="请输入专业">
-                            </div>
+                        <form id="form-info" method="POST" th:action="@{/job/add}">
+                            <h4 class="line-head">发布招聘</h4>
+
                             <div class="form-group">
                                 <label class="control-label">电话</label>
                                 <input name="phone" class="form-control" placeholder="请输入电话">
@@ -94,28 +84,18 @@
                                 <input name="mail" class="form-control" placeholder="请输入mail">
                             </div>
                             <div class="form-group">
-                                <label class="control-label">学科1</label>
-                                <input name="sub1" class="form-control" placeholder="请输入学科1">
+                                <label class="control-label">地址</label>
+                                <input name="address" class="form-control" placeholder="请输入地址">
                             </div>
                             <div class="form-group">
-                                <label class="control-label">学科2</label>
-                                <input name="sub2" class="form-control" placeholder="请输入学科2">
+                                <label class="control-label">工资</label>
+                                <input name="salary" class="form-control" placeholder="请输入工资">
                             </div>
+
+
+                            <textarea name="detail" id="text-introduce" style="display: none;"></textarea>
                             <div class="form-group">
-                                <label class="control-label">学科3</label>
-                                <input name="sub3" class="form-control" placeholder="请输入学科3">
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">金额</label>
-                                <input name="money" class="form-control" placeholder="请输入金额">
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">vcr</label>
-                                <input name="vcr" id="file_vcr" type="file" class="form-control" placeholder="请输入vcr">
-                            </div>
-                            <textarea name="introduce" id="text-introduce" style="display: none;"></textarea>
-                            <div class="form-group">
-                                <label class="control-label">简介</label>
+                                <label class="control-label">描述</label>
                                 <div id="introduce"></div>
                             </div>
 

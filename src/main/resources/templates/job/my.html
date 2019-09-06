@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>招聘信息</title>
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <header th:replace="common/model::header">头部</header>
+
+    <main class="container">
+        <!-- 卡片 -->
+        <div class="row ">
+
+            <div class="m-4  col-md-5  " th:each="i:${allJobs}">
+                <div class="card  ">
+                    <div class="row no-gutters ">
+                        <div class="col-8">
+                            <div class="card-body">
+                                <p class="card-text">工资:[[${i.salary}]]</p>
+                                <p class="card-text">地址:[[${i.address}]]</p>
+                                
+                                <p class="card-text"><small class="text-muted">发布时间:[[${i.time}]]</small></p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card-body">
+                                <p><a th:href="@{/job/one/{id}(id=${i.id})} ">查看</a></p>
+                                <p><a th:href="@{/job/delete/{id}(id=${i.id})} ">删除</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="m-4  col-md-5  ">
+                <div class="card  ">
+                    <div class="row no-gutters ">
+                        <div class="card-body" style=" text-align:center;">
+                          
+                            <br>
+                            <a href="/job/addone"><i class="fa fa-plus fa-5x"></i></a>
+                            <br>
+                          
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+
+    <footer th:replace="common/model::footer">页脚</footer>
+    <!-- Essential javascripts for application to work-->
+    <script src="/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="/js/plugins/pace.min.js"></script>
+</body>
+
+</html>

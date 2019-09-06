@@ -27,8 +27,30 @@
 <body>
     <header th:replace="common/model::header">头部</header>
     <div class="container">
-
+<p>[[${#authentication.principal.authorities[0]}]]</p>
         <h1>临时主页</h1>
+
+        <div sec:authorize="hasRole('R_ADMIN')">
+            <p class="bg-info">权限0001可见</p>
+        </div>
+        <div sec:authorize="hasRole('ROLE_MD')">
+            <p class="bg-info">权限0002可见</p>
+        </div>
+        <div sec:authorize="hasAnyAuthority('R_ADMIN')">
+            <p class="bg-info">权限0003可见</p>
+        </div>
+        <div sec:authorize="hasRole('ROLE_MD')">
+            <p class="bg-info">权限0004可见</p>
+        </div>
+        <div sec:authorize="hasAnyAuthority('student')">
+            <p class="bg-info">权限0005可见</p>
+        </div>
+        <div sec:authorize="hasRole('student')">
+            <p class="bg-info">权限0006可见</p>
+        </div>
+————————————————
+版权声明：本文为CSDN博主「尖叫酒杯」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/Maskkiss/article/details/82660942
         <q>一个临时的主页，访问各个模块，用来测试方便的。</q>
         <p><a href="/auth/page-reg">注册</a></p>
         <p><a href="/auth/page-login">登录</a></p>

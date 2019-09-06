@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>[[${model.name}]]的求职信息</title>
+    <title>[[${model.name}]]的招聘信息</title>
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <!-- Font-icon css-->
@@ -34,18 +34,10 @@
                         </p>
 
 
-                        <p class="card-text">入学年份:[[${model.year}]]</p>
-                        <p class="card-text">专 业:[[${model.major}]]</p>
+                        <p class="card-text">工资:[[${model.salary}]]</p>
+                        <p class="card-text">地址:[[${model.address}]]</p>
 
-                        <p class="card-text">
-                            <button type="button" class="btn btn-primary"
-                                th:if="${model.sub1!=null && model.sub1!='' }">[[${model.sub1}]]</button>
-                            <button type="button" class="btn btn-info"
-                                th:if="${model.sub2!=null && model.sub2!='' }">[[${model.sub2}]]</button>
-                            <button type="button" class="btn btn-success"
-                                th:if="${model.sub3!=null && model.sub3!='' }">[[${model.sub3}]]</button>
 
-                        </p>
                         <p class="card-text"><small class="text-muted">发布时间:[[${model.time}]]</small></p>
                         <p>
 
@@ -69,13 +61,9 @@
                 </div>
             </div>
         </div>
-        <p align="center">
-            <video th:if="${model.vcr!=null && model.vcr!='' }" th:src="@{/file/down/{vcr}(vcr=${model.vcr})}"
-                width="90%" controls="controls"></video>
 
-        </p>
 
-        <div class="introduce" th:utext="${model.introduce}">
+        <div class="detail" th:utext="${model.detail}">
 
         </div>
 

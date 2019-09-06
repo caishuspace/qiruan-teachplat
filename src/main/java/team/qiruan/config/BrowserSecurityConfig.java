@@ -30,6 +30,11 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**", "/webjars/**", "/css/**", "/js/**").permitAll()// 允许静态资源
                 .antMatchers("/user/**","/letter/**").authenticated()// 用户信息需要认证
                 .antMatchers("/jobseek/add**").authenticated()//发布求职信息需要认证
+                .antMatchers("/jobseek/my**").authenticated()//查看自己求职信息需要认证
+                .antMatchers("/jobseek/delete**").authenticated()//删除求职信息需要认证
+                .antMatchers("/job/add**").authenticated()//发布招聘信息需要认证
+                .antMatchers("/job/my**").authenticated()//查看自己招聘信息需要认证
+                .antMatchers("/job/delete**").authenticated()//删除招聘信息需要认证
                 .and().rememberMe().tokenRepository(persistentTokenRepository()) // 配置token持久化仓库
                 .tokenValiditySeconds(3600 * 24 * 7) // remember 过期时间，单为秒
                 .userDetailsService(userDetailService) // 处理自动登录逻辑
