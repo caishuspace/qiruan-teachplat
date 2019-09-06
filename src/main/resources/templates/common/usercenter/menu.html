@@ -1,8 +1,7 @@
 <div class="card text-center">
     <h4 class="card-header" th:text="${#authentication.name+'的个人中心'}">Card header</h4>
     <div class="card-body">
-        <img id="img_avatar" class="img-fluid" 
-            th:src="@{/file/down/{avatar}(avatar=${userinfo.avatar})}" alt="Card image">
+        <img id="img_avatar" class="img-fluid" th:src="@{/file/down/{avatar}(avatar=${userinfo.avatar})}" alt="Card image">
     </div>
     <div class="card-body">
         <a id="a_editavatar" class="card-link" href="javascript:;">修改头像</a>
@@ -11,28 +10,28 @@
         <input type="file" id="file_avatar" style="display:none;">
     </form>
 </div>
-    <div class="bs-component mt-3">
-        <div class="list-group text-center">
-            <a id="menu_basic" class="list-group-item list-group-item-action" th:href="@{/user/{username}(username=${#authentication.name})}">基本资料</a>
-            <a id="menu_jobseek" class="list-group-item list-group-item-action" sec:authorize="hasAnyAuthority('student')" th:href="@{/jobseek/my}">我的求职</a>
-            <a id="menu_jobseek" class="list-group-item list-group-item-action" sec:authorize="hasAnyAuthority('agency')" th:href="@{/job/my}">我的招聘</a>
-            <a id="menu_security" class="list-group-item list-group-item-action" th:href="@{/user/{username}/security(username=${#authentication.name})}">安全中心</a>
-            <a id="menu_letter" class="list-group-item list-group-item-action" href="/letter/mailbox">站内信箱</a>
-        </div>
-        <button id="btn-logout" class="btn btn-outline-danger w-100 mt-2">退出登录</button>
-        <form id="form-logout" method="POST" th:action="@{/auth/logout}">
-            <input type="submit" style="display:none;">
-        </form>
-        <script>
-            $("#btn-logout").click(function () {
-                //退出登录要用post方法，用form提交是为了省事
-                //虽然后来找到了更好的方法，但我懒得改
-                //“又不是不能用”
-                //^_^
-                if (!confirm("是否退出登录？")) {
-                    return;
-                }
-                $("#form-logout").submit();
-            });
-        </script>
+<div class="bs-component mt-3">
+    <div class="list-group text-center">
+        <a id="menu_basic" class="list-group-item list-group-item-action" th:href="@{/user/{username}(username=${#authentication.name})}">基本资料</a>
+        <a id="menu_jobseek" class="list-group-item list-group-item-action" sec:authorize="hasAnyAuthority('student')" th:href="@{/jobseek/my}">我的求职</a>
+        <a id="menu_jobseek" class="list-group-item list-group-item-action" sec:authorize="hasAnyAuthority('agency')" th:href="@{/job/my}">我的招聘</a>
+        <a id="menu_security" class="list-group-item list-group-item-action" th:href="@{/user/{username}/security(username=${#authentication.name})}">安全中心</a>
+        <a id="menu_letter" class="list-group-item list-group-item-action" href="/letter/mailbox">站内信箱</a>
     </div>
+    <button id="btn-logout" class="btn btn-outline-danger w-100 mt-2">退出登录</button>
+    <form id="form-logout" method="POST" th:action="@{/auth/logout}">
+        <input type="submit" style="display:none;">
+    </form>
+    <script>
+        $("#btn-logout").click(function() {
+            //退出登录要用post方法，用form提交是为了省事
+            //虽然后来找到了更好的方法，但我懒得改
+            //“又不是不能用”
+            //^_^
+            if (!confirm("是否退出登录？")) {
+                return;
+            }
+            $("#form-logout").submit();
+        });
+    </script>
+</div>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/wangEditor.min.js"></script>
+    <script th:replace="common/model::#common_jquery_csrf">
+        /*jquery ajax的csrf header*/
+    </script>
+    <script th:replace="common/usercenter/avatar_script"></script>
+    <title>留言区</title>
+</head>
+
+<body>
+    <header th:replace="common/model::header">头部</header>
+    <div class="container">
+        <h2>我的评价</h2>
+        <script src="/js/message/load.js"></script>
+        <script>
+            var str = $("#userinfo").val();
+            console.log(str);
+            showMessage(str);
+        </script>
+    </div>
+
+</body>
+
+</html>

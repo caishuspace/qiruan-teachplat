@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/wangEditor.min.js"></script>
+    <script th:replace="common/model::#common_jquery_csrf">
+        /*jquery ajax的csrf header*/
+    </script>
+    <script th:replace="common/usercenter/avatar_script"></script>
+
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            $("#menu_cooperate").addClass("active");
+        });
+    </script>
+
+    <title>用户信息 - 家教系统</title>
+</head>
+
+<body>
+    <header th:replace="common/model::header">头部</header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mb-3" th:include="common/usercenter/menu">左侧菜单</div>
+            <div class="col-md-9">
+                <br>
+                <h2>留言列表</h2><br>
+                <div class="form-control w-100 align-content-center">
+                    <a href="https://www.baidu.com">
+                        <p>
+                            合同编号
+                        </p> <small>Someone famous <cite>Source Title</cite></small>
+                    </a>
+                </div>
+                <br>
+                <a href="views">这是评论区连接</a>
+                <script src="/js/message/load.js"></script>
+                <script>
+                    var str = $("#userinfo").val()
+                    showMessage(str);
+                </script>
+
+            </div>
+        </div>
+    </div>
+
+    <section th:replace="common/model::friend">友情链接</section>
+
+    <footer th:replace="common/model::footer">页脚</footer>
+
+    <!-- Essential javascripts for application to work-->
+    <script src="/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="/js/plugins/pace.min.js"></script>
+</body>
+
+</html>
