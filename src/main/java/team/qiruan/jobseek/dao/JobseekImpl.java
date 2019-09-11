@@ -28,7 +28,7 @@ public class JobseekImpl implements JobseekDao{
 
     @Override
     public Jobseek_more search(int id) {
-        List<Jobseek_more> list = jdbcTemplate.query("SELECT jobseek.id,jobseek.time,jobseek.uid,jobseek.school,jobseek.year,jobseek.major,jobseek.phone, jobseek.qq,jobseek.mail,jobseek.sub1,jobseek.sub2,jobseek.sub3,jobseek.money,jobseek.introduce,jobseek.check,jobseek.vcr,userinfo.avatar,userinfo.name,userinfo.sex FROM jobseek,userinfo WHERE jobseek.uid=userinfo.uid and jobseek.id = ?", new Object[]{id}, new BeanPropertyRowMapper<Jobseek_more>(Jobseek_more.class));
+        List<Jobseek_more> list = jdbcTemplate.query("SELECT jobseek.id,jobseek.time,jobseek.uid,jobseek.school,jobseek.year,jobseek.major,jobseek.phone, jobseek.qq,jobseek.mail,jobseek.sub1,jobseek.sub2,jobseek.sub3,jobseek.money,jobseek.introduce,jobseek.check,jobseek.vcr,userinfo.avatar,user.name,userinfo.sex FROM jobseek,userinfo,user WHERE jobseek.uid=userinfo.uid and userinfo.uid=user.id and jobseek.id = ?", new Object[]{id}, new BeanPropertyRowMapper<Jobseek_more>(Jobseek_more.class));
         if(list!=null && list.size()>0){
             Jobseek_more jobseek_more = list.get(0);
             return jobseek_more;
@@ -53,7 +53,7 @@ public class JobseekImpl implements JobseekDao{
 
     @Override
     public List<Jobseek_less> getAllJobseeks_Less() {
-        List<Jobseek_less> res= jdbcTemplate.query("SELECT jobseek.id,userinfo.avatar,userinfo.name,userinfo.sex, jobseek.sub1,jobseek.sub2,jobseek.sub3,jobseek.year,jobseek.major,jobseek.time  FROM jobseek,userinfo WHERE userinfo.uid=jobseek.uid", new Object[]{}, new BeanPropertyRowMapper<Jobseek_less>(Jobseek_less.class));
+        List<Jobseek_less> res= jdbcTemplate.query("SELECT jobseek.id,userinfo.avatar,user.name,userinfo.sex, jobseek.sub1,jobseek.sub2,jobseek.sub3,jobseek.year,jobseek.major,jobseek.time  FROM jobseek,userinfo,user WHERE userinfo.uid=jobseek.uid and userinfo.uid=user.id", new Object[]{}, new BeanPropertyRowMapper<Jobseek_less>(Jobseek_less.class));
         if(res.isEmpty()){
             return null;
         }
