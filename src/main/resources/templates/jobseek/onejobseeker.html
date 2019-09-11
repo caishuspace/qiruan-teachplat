@@ -19,6 +19,7 @@
 <body>
     <header th:replace="common/model::header">头部</header>
     <main class="container border">
+
         <!-- 卡片 -->
         <div class="card mb-3 border-0">
             <div class="row no-gutters ">
@@ -38,12 +39,9 @@
                         <p class="card-text">专 业:[[${model.major}]]</p>
 
                         <p class="card-text">
-                            <button type="button" class="btn btn-primary"
-                                th:if="${model.sub1!=null && model.sub1!='' }">[[${model.sub1}]]</button>
-                            <button type="button" class="btn btn-info"
-                                th:if="${model.sub2!=null && model.sub2!='' }">[[${model.sub2}]]</button>
-                            <button type="button" class="btn btn-success"
-                                th:if="${model.sub3!=null && model.sub3!='' }">[[${model.sub3}]]</button>
+                            <button type="button" class="btn btn-primary" th:if="${model.sub1!=null && model.sub1!='' }">[[${model.sub1}]]</button>
+                            <button type="button" class="btn btn-info" th:if="${model.sub2!=null && model.sub2!='' }">[[${model.sub2}]]</button>
+                            <button type="button" class="btn btn-success" th:if="${model.sub3!=null && model.sub3!='' }">[[${model.sub3}]]</button>
 
                         </p>
                         <p class="card-text"><small class="text-muted">发布时间:[[${model.time}]]</small></p>
@@ -51,8 +49,7 @@
 
                             <!-- Default dropright button -->
                             <div class="btn-group dropright">
-                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     联系我
                                 </button>
                                 <div class="dropdown-menu">
@@ -70,8 +67,7 @@
             </div>
         </div>
         <p align="center">
-            <video th:if="${model.vcr!=null && model.vcr!='' }" th:src="@{/file/down/{vcr}(vcr=${model.vcr})}"
-                width="90%" controls="controls"></video>
+            <video th:if="${model.vcr!=null && model.vcr!='' }" th:src="@{/file/down/{vcr}(vcr=${model.vcr})}" width="90%" controls="controls"></video>
 
         </p>
 

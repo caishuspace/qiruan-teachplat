@@ -26,8 +26,8 @@
     <div class="container">
         <h2>我的评价</h2>
         <script src="/js/message/load.js"></script>
-        <script>
-            var str = $("#userinfo").val();
+        <script th:inline="javascript">
+            var str = /*[[${#authentication.name}]]*/ "ghhjh";
             console.log(str);
             showMessage(str);
         </script>

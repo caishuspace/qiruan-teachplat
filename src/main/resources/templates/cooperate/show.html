@@ -21,7 +21,7 @@
 
     <script th:inline="javascript">
         $(document).ready(function() {
-            $("#menu_cooperate").addClass("active");
+            $("#menu_coorperate").addClass("active");
         });
     </script>
 
@@ -47,8 +47,9 @@
                 <br>
                 <a href="views">这是评论区连接</a>
                 <script src="/js/message/load.js"></script>
-                <script>
-                    var str = $("#userinfo").val()
+                <script th:inline="javascript">
+                    var str = /*[[${#authentication.name}]]*/ "ghhjh";
+                    console.log(str);
                     showMessage(str);
                 </script>
 
