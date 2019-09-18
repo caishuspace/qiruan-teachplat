@@ -74,6 +74,15 @@
         <div class="introduce" th:utext="${model.introduce}">
 
         </div>
+        <div class="views">
+            <script src="/js/message/load.js"></script>
+            <script th:inline="javascript">
+                var str = /*[[${model.name}]]*/ "ghhjh";
+                console.log(str);
+                showMessage(str);
+            </script>
+            <script th:replace="src\main\resources\templates\user\info.html"></script>
+        </div>
 
 
     </main>

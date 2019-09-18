@@ -38,7 +38,7 @@
         <div id="msg_submit_group" class="text-right mt-2">
             <button id="msg_submit" class="btn btn-primary">评论</button>
         </div>
-        <div id="msg_ajax">
+        <div id="msg_ajax" th:fragment="views">
             <div id="msg_history">
                 <input th:value="${belong}" id="msg_belong" type="hidden">
                 <form id="msg_form_csrf" th:action="@{/message/{belong}(belong=${belong})}" method="POST">
