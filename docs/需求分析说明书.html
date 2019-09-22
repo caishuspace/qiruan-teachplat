@@ -1,0 +1,278 @@
+<h1 id="引言">引言</h1>
+<h2 id="编写目的">编写目的</h2>
+<p>本文档是对本项目的一个总体的把握，以便在下一步的开发设计中更好的控制开发。文档适合于本组成员的开发使用以及家长进行了解。</p>
+<p>互联网+是互联网思维的进一步实践成果，推动经济形态不断地发生演变，从而带动社会经济实体的生命力，为改革、创新、发展提供广阔的网络平台。身处最好的时代，享受高等教育的我们可以通过家教兼职自食其力，亦能体会教书育人的感觉，而相对应家长们也能借此享受优质的家教服务。本产品借助互联网+思维，顺应大学生和家长的实际需要，旨在降低大学生找家教兼职成本，保证大学生安全。通过对发布的信息进行筛选和认证，为大学生和家长达成合作提供方便。</p>
+<h2 id="项目背景">项目背景</h2>
+<ul>
+<li>开发软件名称：家教网</li>
+<li>用户：大学生、家教机构、家长</li>
+<li>项目和其他软件系统的关系：本项目是用springboot+mysql开发的网站系统。</li>
+</ul>
+<h2 id="定义首字母缩写词和缩略语">定义、首字母缩写词和缩略语</h2>
+<table style="width:11%;">
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>单词</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Java</td>
+<td>编写该系统的开发语言</td>
+</tr>
+<tr class="even">
+<td>MVC</td>
+<td>一种软件设计典范，用一种业务逻辑、数据、界面显示分离的方法组织代码，将业务逻辑聚集到一个部件里面，在改进和个性化定制界面及用户交互的同时，不需要重新编写业务逻辑。</td>
+</tr>
+<tr class="odd">
+<td>Spring MVC</td>
+<td>提供了构建 Web 应用程序的全功能 MVC 模块的Web框架。</td>
+</tr>
+<tr class="even">
+<td>Spring Boot</td>
+<td>来简化新Spring应用的初始搭建以及开发过程的全新框架。</td>
+</tr>
+<tr class="odd">
+<td>MySQL</td>
+<td>最流行的关系型数据库管理系统之一。</td>
+</tr>
+<tr class="even">
+<td>Spring Security</td>
+<td>为基于Spring的企业应用系统提供声明式的安全访问控制解决方案的安全框架。</td>
+</tr>
+<tr class="odd">
+<td>Bootstrap</td>
+<td>Twitter公司的设计师Mark Otto和Jacob Thornton合作开发的前端开发框架。</td>
+</tr>
+<tr class="even">
+<td>响应式布局</td>
+<td>一个网站能够兼容多个终端——而不是为每个终端做一个特定的版本。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考资料">参考资料</h2>
+<ol style="list-style-type: decimal">
+<li>《阿里巴巴Java开发手册》</li>
+<li>慕课网《Spring Security开发安全的REST服务》</li>
+<li>Spring Boot基础教程 https://github.com/dyc87112/SpringBoot-Learning</li>
+<li>《Bootstrap4中文手册》</li>
+</ol>
+<h1 id="项目概述">项目概述</h1>
+<h2 id="产品描述">产品描述</h2>
+<ol style="list-style-type: decimal">
+<li>开发意图：本系统的开发是为了降低大学生找家教兼职成本，保证大学生安全。通过对发布的信息进行筛选和认证，为大学生和家长达成合作提供方便。</li>
+<li>应用目标：本系统将成为大学生找兼职、家长发布招聘信息的权威平台。</li>
+<li>与其他有关软件之间的关系：使用了部分开源项目组件，包括<code>WangEditor</code> HTML编辑器和<code>vali-admin</code>后台样式。</li>
+</ol>
+<h2 id="产品需求">产品需求</h2>
+<h3 id="功能需求">功能需求</h3>
+<p>本系统包含9个功能模块，对应信息发布到合作建立的不同步骤。</p>
+<table>
+<thead>
+<tr class="header">
+<th>功能名称</th>
+<th>备注</th>
+<th>裁剪说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>用户注册、登录</td>
+<td>实现用户的注册和登录。</td>
+<td>可部分裁剪</td>
+</tr>
+<tr class="even">
+<td>用户中心</td>
+<td>供用户修改自己的信息，头像、年龄等，包括身份核验操作，核验通过后方可发布信息。</td>
+<td>可部分裁剪</td>
+</tr>
+<tr class="odd">
+<td>求职信息</td>
+<td>大学生在此处发布求职信息，附带简要简历说明或者视频。</td>
+<td>不可裁剪</td>
+</tr>
+<tr class="even">
+<td>招聘信息</td>
+<td>家长在此处发布招聘信息，包括对职位详细说明。</td>
+<td>不可裁剪</td>
+</tr>
+<tr class="odd">
+<td>搜索</td>
+<td>搜索求职信息或招聘信息</td>
+<td>不可裁剪</td>
+</tr>
+<tr class="even">
+<td>在线交流</td>
+<td>一方在浏览信息后，“联系对方”将用邮件或者短信通知对方，并根据设置公开联系方式或者提供在线聊天功能。</td>
+<td>可完全裁剪</td>
+</tr>
+<tr class="odd">
+<td>合作管理</td>
+<td>在合作达成后，维护合作进度，引导打印合同，进行双方评价等。</td>
+<td>不可裁剪</td>
+</tr>
+<tr class="even">
+<td>后台管理</td>
+<td>管理员在登录后台后进行用户审核、用户管理、站点信息配置等。</td>
+<td>可部分裁剪</td>
+</tr>
+<tr class="odd">
+<td>权限管理</td>
+<td>对系统使用者提供权限、角色管理，限制用户可访问的页面。</td>
+<td>可部分裁剪</td>
+</tr>
+</tbody>
+</table>
+<h3 id="性能需求">性能需求</h3>
+<ol style="list-style-type: decimal">
+<li>适应性</li>
+</ol>
+<p>该系统具有一定的可扩展性，业务场景的变化，运行管理员对其进行更新和维护。</p>
+<ol start="2" style="list-style-type: decimal">
+<li>适用性</li>
+</ol>
+<p>采用最流行的<code>Bootstrap</code>响应式设计，为用户提供全平台客户端友好交互方式。</p>
+<ol start="3" style="list-style-type: decimal">
+<li>可靠性</li>
+</ol>
+<p>在设计上选用可靠、稳定的系统平台，以保证服务的延续性。系统提供良好的备份恢复功能，保证数据可靠。</p>
+<ol start="4" style="list-style-type: decimal">
+<li>易用性</li>
+</ol>
+<p>用户界面友好、可操作性较强。用户无需指南便可自行操作使用。</p>
+<ol start="5" style="list-style-type: decimal">
+<li>其他标准</li>
+<li>标准化</li>
+</ol>
+<p>系统充分考虑软、硬件平台的开放性，采用国际通用的技术标准，支持多种协议。</p>
+<ol start="7" style="list-style-type: decimal">
+<li>兼容性</li>
+</ol>
+<p>兼顾近期的需要和将来改革带来的需求变化。为满足未来软硬件的灵活部署和容量要求，应考虑系统规模扩展的需求升级能力；充分支持进一步的开发，以满足变化的需求。</p>
+<ol start="8" style="list-style-type: decimal">
+<li>先进性设计</li>
+</ol>
+<p>采用先进、稳定、的技术，保证系统在建成后一段时间内不会落后，保持系统的领先性。</p>
+<ol start="9" style="list-style-type: decimal">
+<li>经济性</li>
+</ol>
+<p>最大限度利用现有设备和数据资源。</p>
+<ol start="10" style="list-style-type: decimal">
+<li>系统的可管理性</li>
+</ol>
+<p>在日常运行过程中，系统需提供对运行情况的监测和控制功能，从而保证系统的正常运行。</p>
+<h2 id="假定与约束">假定与约束</h2>
+<p>使用本系统大学生与家长达成合作，需要保存部分敏感信息，这对系统安全性和稳定性有很高要求。另外，本系统功能比较复杂，这要求系统在整体进行比较严谨的设计。</p>
+<ol style="list-style-type: decimal">
+<li>总体设计方案对它的约束：本系统作为一个网站项目，受网络、浏览器安全策略等影响，在用户交互方式等方面要受到限制。在其实施的各个阶段都要服从它的一些规划，包括功能设计、系统配置和计划。</li>
+<li>人力、时间的约束：本系统开发过程中也要考虑到人力和时间的约束。</li>
+<li>技术发展规律的约束：计算机技术和产品的发展日新月异，将会给信息处理带来更多的手段，同时也会带来更加丰富的信息表达形式。例如图象和语音技术的进步，多媒体技术的发展，这些都要求系统在设计时考虑技术变化的可能性，为可能的变化预留一定的系统处理能力。</li>
+<li>法律、政策的约束：作为信息平台，要考虑法律和政策实名制要求等。</li>
+</ol>
+<h2 id="需求规定">需求规定</h2>
+<h3 id="对功能的规定">对功能的规定</h3>
+<div class="figure">
+<img src="diagrams/out/功能模块.png" alt="功能模块" />
+<p class="caption">功能模块</p>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th>功能名称</th>
+<th>备注</th>
+<th>裁剪说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>用户注册、登录</td>
+<td>实现用户的注册和登录。</td>
+<td>可部分裁剪</td>
+</tr>
+<tr class="even">
+<td>用户中心</td>
+<td>供用户修改自己的信息，头像、年龄等，包括身份核验操作，核验通过后方可发布信息。</td>
+<td>可部分裁剪</td>
+</tr>
+<tr class="odd">
+<td>求职信息</td>
+<td>大学生在此处发布求职信息，附带简要简历说明或者视频。</td>
+<td>不可裁剪</td>
+</tr>
+<tr class="even">
+<td>招聘信息</td>
+<td>家长在此处发布招聘信息，包括对职位详细说明。</td>
+<td>不可裁剪</td>
+</tr>
+<tr class="odd">
+<td>搜索</td>
+<td>搜索求职信息或招聘信息</td>
+<td>不可裁剪</td>
+</tr>
+<tr class="even">
+<td>在线交流</td>
+<td>一方在浏览信息后，“联系对方”将用邮件或者短信通知对方，并根据设置公开联系方式或者提供在线聊天功能。</td>
+<td>可完全裁剪</td>
+</tr>
+<tr class="odd">
+<td>合作管理</td>
+<td>在合作达成后，维护合作进度，引导打印合同，进行双方评价等。</td>
+<td>不可裁剪</td>
+</tr>
+<tr class="even">
+<td>后台管理</td>
+<td>管理员在登录后台后进行用户审核、用户管理、站点信息配置等。</td>
+<td>可部分裁剪</td>
+</tr>
+<tr class="odd">
+<td>权限管理</td>
+<td>对系统使用者提供权限、角色管理，限制用户可访问的页面。</td>
+<td>可部分裁剪</td>
+</tr>
+</tbody>
+</table>
+<h3 id="性能的规定">性能的规定</h3>
+<h4 id="时间特性要求">时间特性要求</h4>
+<ol style="list-style-type: decimal">
+<li>响应时间：启动系统后，系统应能在较短时间内在服务器端运行。</li>
+<li>更新处理时间：用户提交数据后，应能立即给出响应。</li>
+<li>数据的转换和传送时间：能够在5秒钟内完成。</li>
+</ol>
+<h4 id="输入输出要求">输入输出要求</h4>
+<p>在用户输入不正确的数据时应能保证运行不出错并且给出友好错误提示。</p>
+<h4 id="故障处理要求">故障处理要求</h4>
+<ol style="list-style-type: decimal">
+<li>上传图片失败，检查配置文件上传文件夹是否存在，程序运行用户是否有操作权限，服务器是否有足够的剩余空间。</li>
+<li>日志中警告文件无法删除，手动找到并删除文件，并删除数据库中对应的记录。</li>
+<li>中文乱码，检查数据库编码是否为<code>utf8mb4</code>，可在配置文件数据库连接字符串指定编码</li>
+<li>忘记管理员密码，如果无法用邮箱方式找回，修改数据库<code>user</code>表对应记录（此处的密码是原始密码通过<code>BCryptPasswordEncoder</code>计算得到的）。</li>
+<li>POST提交数据失败，刷新网页以刷新csrf防护的<code>token</code>。</li>
+</ol>
+<h1 id="用例">用例</h1>
+<p>【待补充】</p>
+<h1 id="运行环境">运行环境</h1>
+<h2 id="设备">设备</h2>
+<p>配置了jdk和mysql的服务器。</p>
+<h2 id="开发环境">开发环境</h2>
+<ul>
+<li>Windows 10操作系统</li>
+<li>JDK 1.8.0_162</li>
+<li>MySQL 8</li>
+<li>Visual Studio Code 1.37.1 （最新版本）</li>
+<li>Chrome 73.0.3683.103</li>
+</ul>
+<h2 id="支持软件">支持软件</h2>
+<h3 id="应用软件开发环境">应用软件开发环境</h3>
+<ul>
+<li>编程工具：Visual Studio Code</li>
+<li>编程语言：Java</li>
+<li>依赖管理：Apache Maven</li>
+<li>版本控制：Git</li>
+</ul>
+<h2 id="接口">接口</h2>
+<p>【无】</p>
